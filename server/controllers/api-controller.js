@@ -1,4 +1,4 @@
 
-export const getLocations = (req, res) => {
+export const test = (req, res) => {
     res.send('Hello World!');
 }

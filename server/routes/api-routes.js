@@ -1,8 +1,8 @@
 import express from 'express';
-import { getLocations} from '../controllers/api-controller.js'
+import { test } from '../controllers/api-controller.js'
 
 const router = express.Router();
 
-router.get('/get-locations', getLocations)
+router.get('/test', test)
 
 export default router;
