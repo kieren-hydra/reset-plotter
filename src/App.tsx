@@ -2,7 +2,9 @@ import './App.css'
 import {useStore} from './stores/useStore'
 import {useQuery} from '@tanstack/react-query';
 import {webService} from './utils/api-utils.ts';
-
+import { Routes, Route } from "react-router";
+import Home from './components/Home';
+import Test from './components/Test';
 
 function App() {
 
@@ -29,6 +31,12 @@ function App() {
             <h2>{isLoading ? 'Loading...' : 'Ready!'}</h2>
             <h2>{data}</h2>
             <h2>{error?.message}</h2>
+
+
+            <Routes>
+                <Route path={'/'} element={<Home/>}/>
+                <Route path={'/test'} element={<Test/>}/>
+            </Routes>
         </>
     )
 }
