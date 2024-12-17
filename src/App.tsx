@@ -27,7 +27,7 @@ function App() {
             <button onClick={increment}>Increment</button>
             <button onClick={reset}>Reset</button>
 
-            <h2>{isLoading ? 'Loading...' : 'Ready!!'}</h2>
+            <h2 className={"m-16"}>{isLoading ? 'Loading...' : 'Ready!!'}</h2>
             <h2>{data?.message}</h2>
             <h2>{error?.message}</h2>
 
