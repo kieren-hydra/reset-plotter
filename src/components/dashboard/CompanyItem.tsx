@@ -1,9 +1,8 @@
 import {Company} from "../../types/company.ts";
 import DataStatus from "./DataStatus.tsx";
-import {useDashboardStore} from "../../stores/useDashBoardStore.ts";
 import ListItemContainer from "./ListItemContainer.tsx";
 import SiteList from "./SiteList.tsx";
-import {useNavigate} from "react-router";
+import {useParams} from "react-router";
 
 type CompanyItemProps = {
     companyData: Company
@@ -12,33 +11,27 @@ type CompanyItemProps = {
 const CompanyItem = ({companyData}: CompanyItemProps) => {
     const {name, id, sites} = companyData
 
-    const {selectedCompanyId, setSelectedSiteId, setSelectedCompanyId} = useDashboardStore()
+    const { companyId } = useParams()
 
-    const navigate = useNavigate()
+    const isSelected = id.toString() === companyId
 
-    const isSelected = id === selectedCompanyId
-
-    const handleClick = (isSelected: boolean) => {
-        setSelectedCompanyId(isSelected ? null : id);
-        setSelectedSiteId(null);
-
-        //for testing
-        navigate(`/`)
-    }
+    const path = isSelected ? '/' : `/company/${id}`
 
     return (
         <div>
             <ListItemContainer
                 isSelected={isSelected}
-                handleClick={() => handleClick(isSelected)}>
+            path={path}
+            >
 
                 <div className="flex gap-2 items-center">
 
                     <i className="ri-building-2-line"></i>
                     <p>{name || "Unknown Company"}</p>
+
                 </div>
 
-                <DataStatus/>
+                <DataStatus status={"saved"}/>
             </ListItemContainer>
 
             {isSelected && <SiteList sites={sites}/>}

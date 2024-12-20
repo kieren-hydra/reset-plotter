@@ -1,9 +1,8 @@
 import {Site} from "../../types/site.ts";
 import DataStatus from "./DataStatus.tsx";
 import ListItemContainer from "./ListItemContainer.tsx";
-import {useDashboardStore} from "../../stores/useDashBoardStore.ts";
 import SiteEditor from "./SiteEditor.tsx";
-import {useNavigate} from "react-router";
+import {useParams} from "react-router";
 
 type SiteItemProps = {
     siteData: Site
@@ -12,23 +11,21 @@ const SiteItem = ({siteData}: SiteItemProps) => {
 
     const {name, id, terminals, boundary} = siteData
 
-    const {selectedSiteId, setSelectedSiteId} = useDashboardStore()
+    const { companyId, siteId } = useParams()
 
-    const navigate = useNavigate()
+    const isSelected = id.toString() === siteId
 
-    const isSelected = id === selectedSiteId
+    const path = isSelected ? `/company/${companyId}` : `/company/${companyId}/site/${id}`
 
-    const handleClick = (isSelected: boolean, id: number) => {
-        setSelectedSiteId(isSelected ? null : id);
-        navigate(`/site/${id}`)
-    }
+
 
     return (
 
         <div>
             <ListItemContainer
                 isSelected={isSelected}
-                handleClick={() => handleClick(isSelected, id)}>
+                path={path}
+            >
 
                 <div className="flex gap-2 items-center">
 
@@ -36,15 +33,15 @@ const SiteItem = ({siteData}: SiteItemProps) => {
                     <p>{name || "Unknown Site"}</p>
                 </div>
 
-                <DataStatus/>
+                <DataStatus status={"no-data"}/>
 
             </ListItemContainer>
 
             {isSelected &&
-            <SiteEditor
-                terminals={terminals}
-                boundary={boundary}
-            />}
+                <SiteEditor
+                    terminals={terminals}
+                    boundary={boundary}
+                />}
         </div>
 
     )

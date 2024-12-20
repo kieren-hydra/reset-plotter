@@ -1,4 +1,4 @@
-import {Routes, Route} from "react-router";
+import {Routes, Route, Outlet} from "react-router";
 import PlottrLayout from "./components/PlottrLayout.tsx";
 import SiteMap from "./components/map/SiteMap.tsx";
 
@@ -9,8 +9,11 @@ function App() {
             <Route path="/" element={<PlottrLayout/>}/>
 
             <Route element={<PlottrLayout/>}>
-                <Route path={"site/:siteId"} element={<SiteMap/>}/>
+                <Route path={"company/:companyId"} element={<Outlet />}>
+                    <Route path={"site/:siteId"} element={<SiteMap/>}/>
+                </Route>
             </Route>
+
         </Routes>
     )
 }
