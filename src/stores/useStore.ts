@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface StoreState {
+type StoreState = {
     count: number;
     increment: () => void;
     reset: () => void;

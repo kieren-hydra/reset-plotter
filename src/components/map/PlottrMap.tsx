@@ -1,8 +1,11 @@
 import {GoogleMap, useJsApiLoader} from "@react-google-maps/api";
+import LoadingWheel from "../LoadingWheel.tsx";
+import ErrorFallback from "../ErrorFallback.tsx";
+import {ErrorBoundary} from "react-error-boundary";
 
 const containerStyle = {
-    width: "100%",
-    height: "100%", // Adjust height as needed
+    height: "100%",
+    flex: 1,
 };
 
 const center = {
@@ -24,11 +27,11 @@ type GoogleMapComponentProps = {
     });
 
     if (loadError) {
-        return <div>Error loading maps. Please try again later.</div>;
+        return <ErrorFallback/>;
     }
 
     if (!isLoaded) {
-        return <div>Loading Maps...</div>;
+        return <LoadingWheel size={"large"}/>;
     }
 
     const handleMapClick = (event: google.maps.MapMouseEvent) => {
@@ -40,7 +43,8 @@ type GoogleMapComponentProps = {
     };
 
     return (
-        <div className="h-full grow">
+        <ErrorBoundary fallback={<ErrorFallback/>}>
+
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
@@ -50,13 +54,8 @@ type GoogleMapComponentProps = {
                 {children}
 
             </GoogleMap>
-            {/*<GoogleMap*/}
-            {/*    mapContainerStyle={containerStyle}*/}
-            {/*    center={center}*/}
-            {/*    zoom={15}*/}
-            {/*    onClick={handleMapClick}*/}
-            {/*/>*/}
-        </div>
+
+        </ErrorBoundary>
     );
 };
 

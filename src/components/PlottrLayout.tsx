@@ -1,5 +1,5 @@
-import PlottrMap from "./PlottrMap.tsx";
-import Dashboard from "./Dashboard.tsx";
+import PlottrMap from "./map/PlottrMap.tsx";
+import Dashboard from "./dashboard/Dashboard.tsx";
 import {Outlet} from "react-router";
 
 const PlottrLayout = () => {
@@ -12,5 +12,4 @@ const PlottrLayout = () => {
         </div>
     )
 }
-
 export default PlottrLayout
