@@ -20,7 +20,6 @@ const ListItemContainer = ({isSelected, handleClick, children, path} : ListItemC
             </Link>
 
         </div>
-
     )
 }
 

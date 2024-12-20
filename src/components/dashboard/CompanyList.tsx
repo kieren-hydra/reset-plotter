@@ -1,19 +1,15 @@
 import CompanyItem from "./CompanyItem.tsx";
-import {useQuery} from "@tanstack/react-query";
-import {webService} from "../../utils/api-utils.ts";
 import {Company} from "../../types/company.ts";
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from "../ErrorFallback.tsx";
 import LoadingWheel from "../LoadingWheel.tsx";
+import useResetAPIData from "../../hooks/useResetAPIData.tsx";
 
 const CompanyList = () => {
 
-    const {data, isLoading, error} = useQuery({
-        queryKey: ['locations'],
-        queryFn: () => webService.get('/test '),
-    })
+    const { allData, isLoading, error} = useResetAPIData({})
 
-    const companies = data?.data?.companies
+    const companies = allData?.companies
 
     return (
         <ErrorBoundary fallback={<ErrorFallback/>}>
