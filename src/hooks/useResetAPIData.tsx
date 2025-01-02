@@ -3,7 +3,7 @@ import {webService} from "../utils/api-utils.ts";
 import {Company} from "../types/company.ts";
 import {Site} from "../types/site.ts";
 
-const useResetAPIData = (companyId: number | null = null, siteId: number | null = null) => {
+export const useResetAPIData = (companyId: number | null = null, siteId: number | null = null) => {
 
     const {data, isLoading, error} = useQuery({
         queryKey: ['locations'],
@@ -16,7 +16,11 @@ const useResetAPIData = (companyId: number | null = null, siteId: number | null 
         if (!companyId || !siteId) {
             return
         }
-        return allData?.companies?.find((company: Company) => company.id === companyId)?.sites?.find((site: Site) => site.id === siteId)
+        const parentCompany = allData?.companies?.find((company: Company) => company.id === companyId)
+
+        const siteData = parentCompany ? parentCompany.sites?.find((site: Site) => site.id === siteId) : null
+
+        return {...siteData, parentCompanyName: parentCompany?.name}
     }
 
     const singleSiteData = getSingleSiteData()

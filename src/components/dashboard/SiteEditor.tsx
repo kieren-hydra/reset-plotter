@@ -29,6 +29,7 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
                     <PlottrButton
                         handleClick={handleClick}
                         label={"Geofence Editor"}
+                        color="white"
                     />
                 </div>
             </div>

@@ -10,7 +10,7 @@ const SiteBoundaryEditable = () => {
 
     const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
 
-    const { setSiteId, setSiteName, setSiteBoundary, siteBoundary, siteId } = useEditSiteStore()
+    const { setSiteId, setSiteName, setSiteBoundary, siteBoundary, siteId, setCompanyName } = useEditSiteStore()
 
     const colour = "orange"
 
@@ -20,10 +20,11 @@ const SiteBoundaryEditable = () => {
         const existingBoundaryInStore = siteBoundary && siteId?.toString() === siteIdParam
 
         if(singleSiteData && !existingBoundaryInStore) {
-        const { name, id, boundary } = singleSiteData
+        const { name, id, boundary, parentCompanyName } = singleSiteData
         setSiteId(id)
         setSiteBoundary(boundary)
         setSiteName(name)
+        setCompanyName(parentCompanyName)
         }
     }, [setSiteBoundary, setSiteId, setSiteName, singleSiteData, siteBoundary, siteId, siteIdParam]);
 

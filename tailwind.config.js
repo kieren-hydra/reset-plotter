@@ -15,7 +15,7 @@ export default {
         },
         red: '#D92329',
         green: '#009744',
-      }
+      },
     },
   },
   plugins: [],
