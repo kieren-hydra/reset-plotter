@@ -7,7 +7,7 @@ import useResetAPIData from "../../hooks/useResetAPIData.tsx";
 
 const CompanyList = () => {
 
-    const { allData, isLoading, error} = useResetAPIData({})
+    const { allData, isLoading, error} = useResetAPIData()
 
     const companies = allData?.companies
 

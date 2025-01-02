@@ -11,12 +11,11 @@ const SiteItem = ({siteData}: SiteItemProps) => {
 
     const {name, id, terminals, boundary} = siteData
 
-    const { companyId, siteId } = useParams()
+    const { companyIdParam, siteIdParam } = useParams()
 
-    const isSelected = id.toString() === siteId
+    const isSelected = id.toString() === siteIdParam
 
-    const path = isSelected ? `/company/${companyId}` : `/company/${companyId}/site/${id}`
-
+    const path = isSelected ? `/company/${companyIdParam}` : `/company/${companyIdParam}/site/${id}`
 
 
     return (

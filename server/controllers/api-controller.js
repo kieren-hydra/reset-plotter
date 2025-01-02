@@ -98,7 +98,7 @@ export const test = (req, res) => {
                             {
                                 "name": "Warehouse",
                                 "id": 3456,
-                                "coordinates": []
+                                "boundary": []
                             }
                         ],
                         "terminals": [

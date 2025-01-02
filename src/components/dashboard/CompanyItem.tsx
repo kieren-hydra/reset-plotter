@@ -11,9 +11,9 @@ type CompanyItemProps = {
 const CompanyItem = ({companyData}: CompanyItemProps) => {
     const {name, id, sites} = companyData
 
-    const { companyId } = useParams()
+    const { companyIdParam } = useParams()
 
-    const isSelected = id.toString() === companyId
+    const isSelected = id.toString() === companyIdParam
 
     const path = isSelected ? '/' : `/company/${id}`
 

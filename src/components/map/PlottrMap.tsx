@@ -1,11 +1,14 @@
 import {GoogleMap, useJsApiLoader} from "@react-google-maps/api";
+import { useSearchParams } from "react-router";
 import LoadingWheel from "../LoadingWheel.tsx";
 import ErrorFallback from "../ErrorFallback.tsx";
 import {ErrorBoundary} from "react-error-boundary";
+import {useEffect, useState} from "react";
+import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 
 const containerStyle = {
     height: "100%",
-    flex: 1,
+    width: "100%",
 };
 
 const center = {
@@ -15,11 +18,19 @@ const center = {
 
 type GoogleMapComponentProps = {
     children: React.ReactNode,
-    clickable: boolean,
 };
 
-// const GoogleMapComponent = ({children, clickable}: GoogleMapComponentProps) => {
-    const PlottrMap = ({children, clickable}: GoogleMapComponentProps) => {
+const PlottrMap = ({children}: GoogleMapComponentProps) => {
+    const [queryParams] = useSearchParams();
+
+    const [clickable, setClickable] = useState(false);
+
+    useEffect(() => {
+        const isClickable = queryParams.get("edit_boundary") === "true";
+        setClickable(isClickable);
+    }, [queryParams]);
+
+    const { setSiteBoundary, siteBoundary } = useEditSiteStore()
 
     // Load the Google Maps JavaScript API
     const {isLoaded, loadError} = useJsApiLoader({
@@ -38,6 +49,7 @@ type GoogleMapComponentProps = {
         if (clickable && event.latLng) {
             const lat = event.latLng.lat();
             const lng = event.latLng.lng();
+            setSiteBoundary([...siteBoundary, {lat, lng}])
             console.log("Lat:", lat, "Lng:", lng);
         }
     };
@@ -45,15 +57,28 @@ type GoogleMapComponentProps = {
     return (
         <ErrorBoundary fallback={<ErrorFallback/>}>
 
+            <div className={"flex flex-1 w-full h-full relative"}>
+
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom={15}
                 onClick={handleMapClick}
+                options={{
+                    mapTypeControl: true, // Enable the map type control
+                    mapTypeControlOptions: {
+                        position: google.maps.ControlPosition.BOTTOM_LEFT,
+                        style: google.maps.MapTypeControlStyle.DEFAULT,
+                    },
+                }}
             >
                 {children}
 
             </GoogleMap>
+
+
+
+            </div>
 
         </ErrorBoundary>
     );

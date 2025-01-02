@@ -3,11 +3,7 @@ import {webService} from "../utils/api-utils.ts";
 import {Company} from "../types/company.ts";
 import {Site} from "../types/site.ts";
 
-type usePlottrDataProps = {
-    companyId?: number | null,
-    siteId?: number | null
-}
-const useResetAPIData = ({companyId = null, siteId = null}: usePlottrDataProps) => {
+const useResetAPIData = (companyId: number | null = null, siteId: number | null = null) => {
 
     const {data, isLoading, error} = useQuery({
         queryKey: ['locations'],

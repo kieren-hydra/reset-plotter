@@ -1,23 +1,26 @@
-import SiteBoundary from "./SiteBoundary.tsx";
+import { useSearchParams } from "react-router";
+import { useEffect, useState } from "react";
+import SiteBoundaryStatic from "./SiteBoundaryStatic.tsx";
 import Terminals from "./Terminals.tsx";
 import SiteVertices from "./SiteVertices.tsx";
-import {useSearchParams} from "react-router";
+import SiteBoundaryEditable from "./SiteBoundaryEditable.tsx";
 
 const SiteMap = () => {
+    const [queryParams] = useSearchParams();
+    const [editBoundary, setEditBoundary] = useState(false);
 
-    const [queryParams] = useSearchParams()
-
-    const editBoundary = queryParams.get("edit_boundary") === "true"
+    useEffect(() => {
+        const isEditBoundary = queryParams.get("edit_boundary") === "true";
+        setEditBoundary(isEditBoundary);
+    }, [queryParams]);
 
     return (
         <>
-            {editBoundary &&
-                <SiteBoundary/>
-            }
-            <SiteVertices/>
-            <Terminals/>
+            {editBoundary ? <SiteBoundaryEditable /> : <SiteBoundaryStatic />}
+            <SiteVertices />
+            <Terminals />
         </>
-    )
-}
+    );
+};
 
-export default SiteMap
+export default SiteMap;

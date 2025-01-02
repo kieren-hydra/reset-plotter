@@ -9,8 +9,8 @@ function App() {
             <Route path="/" element={<PlottrLayout/>}/>
 
             <Route element={<PlottrLayout/>}>
-                <Route path={"company/:companyId"} element={<Outlet />}>
-                    <Route path={"site/:siteId"} element={<SiteMap/>}/>
+                <Route path={"company/:companyIdParam"} element={<Outlet />}>
+                    <Route path={"site/:siteIdParam"} element={<SiteMap/>}/>
                 </Route>
             </Route>
 
