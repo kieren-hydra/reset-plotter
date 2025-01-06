@@ -1,4 +1,3 @@
-export type Boundary = Array<{
-    lat: number;
-    lng: number;
-}>;
+import {Coordinate} from "./coordinate.ts";
+
+export type Boundary = Array<Coordinate>;

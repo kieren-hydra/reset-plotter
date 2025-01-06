@@ -13,7 +13,6 @@ const Dashboard = () => {
 
                 <SearchBar/>
                 <CompanyList/>
-
             </div>
         </div>
     )

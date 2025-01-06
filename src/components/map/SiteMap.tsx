@@ -4,20 +4,24 @@ import SiteBoundaryStatic from "./SiteBoundaryStatic.tsx";
 import Terminals from "./Terminals.tsx";
 import SiteVertices from "./SiteVertices.tsx";
 import SiteBoundaryEditable from "./SiteBoundaryEditable.tsx";
+import PinEditor from "./PinEditor.tsx";
+import {MapMode} from "../../types/map-mode.ts";
 
 const SiteMap = () => {
     const [queryParams] = useSearchParams();
-    const [editBoundary, setEditBoundary] = useState(false);
+    const [mapMode, setMapMode] = useState<MapMode>("view");
 
     useEffect(() => {
-        const isEditBoundary = queryParams.get("edit_boundary") === "true";
-        setEditBoundary(isEditBoundary);
+        const mapModeParam = queryParams.get("map_mode");
+        setMapMode(mapModeParam as MapMode || "view");
+
     }, [queryParams]);
 
     return (
         <>
-            {editBoundary ? <SiteBoundaryEditable /> : <SiteBoundaryStatic />}
-            <SiteVertices />
+            {mapMode === "view" ? <SiteBoundaryStatic /> : <SiteBoundaryEditable />}
+            {mapMode !== "view" && <SiteVertices />}
+            {mapMode === "edit_pin" && <PinEditor />}
             <Terminals />
         </>
     );

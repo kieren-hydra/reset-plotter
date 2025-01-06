@@ -13,10 +13,10 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
 
     const hasBoundary = boundary && boundary.length > 0
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [queryParams, setQueryParams] = useSearchParams();
 
     const handleClick = () => {
-        setSearchParams({ ...Object.fromEntries(searchParams), edit_boundary: "true" });
+        setQueryParams({ ...Object.fromEntries(queryParams), map_mode: "edit_boundary" });
     }
 
     return (
@@ -26,6 +26,7 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
                 <small className="text-gray-500">Click on the map to place at least three pins to define a
                     boundary</small>
                 <div className="flex justify-end">
+
                     <PlottrButton
                         handleClick={handleClick}
                         label={"Geofence Editor"}

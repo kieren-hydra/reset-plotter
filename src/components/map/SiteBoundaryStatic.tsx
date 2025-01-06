@@ -31,7 +31,7 @@ const SiteBoundaryStatic = () => {
         return
     }
 
-    if(siteBoundary && siteBoundary.length > 2) {
+    if(siteBoundary) {
         return (
             <Polygon
                 onClick={() => {}}

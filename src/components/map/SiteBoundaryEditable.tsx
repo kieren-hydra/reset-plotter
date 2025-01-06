@@ -7,11 +7,8 @@ import {useEffect} from "react";
 const SiteBoundaryEditable = () => {
 
     const {companyIdParam, siteIdParam} = useParams()
-
     const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
-
     const { setSiteId, setSiteName, setSiteBoundary, siteBoundary, siteId, setCompanyName } = useEditSiteStore()
-
     const colour = "orange"
 
     //This sets the site boundary in the store, unless it already exist in the store - KACM
@@ -38,7 +35,7 @@ const SiteBoundaryEditable = () => {
         return
     }
 
-    if (siteBoundary && siteBoundary.length > 2) {
+    if (siteBoundary) {
 
         return (
             <Polygon

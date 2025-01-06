@@ -3,23 +3,27 @@ import {useSearchParams} from "react-router";
 import LoadingWheel from "../LoadingWheel.tsx";
 import ErrorFallback from "../ErrorFallback.tsx";
 import {ErrorBoundary} from "react-error-boundary";
-import {useEffect, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import MapOverLays from "./MapOverLays.tsx";
 
 type GoogleMapComponentProps = {
-    children: React.ReactNode,
+    children: ReactNode,
 };
+
+type MapMode = "view" | "edit_boundary" | "edit_pin" | "delete_pin" | "move_pin" | "edit_terminal";
 
 const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
-    const [queryParams] = useSearchParams();
+    const [queryParams, setQueryParams] = useSearchParams();
     const {setSiteBoundary, siteBoundary} = useEditSiteStore()
-    const [boundaryEditorMode, setBoundaryEditorMode] = useState(false);
+    const [MapMode, setMapMode] = useState<MapMode>("view");
 
     useEffect(() => {
-        const canEditBoundary = queryParams.get("edit_boundary") === "true";
-        setBoundaryEditorMode(canEditBoundary);
+
+        const mapModeParam = queryParams.get("map_mode");
+        setMapMode(mapModeParam as MapMode || "view");
+
     }, [queryParams]);
 
     // Load the Google Maps JavaScript API
@@ -36,11 +40,21 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
     }
 
     const handleMapClick = (event: google.maps.MapMouseEvent) => {
-        if (boundaryEditorMode && event.latLng) {
+
+        // if (MapMode === "edit_pin") {
+        //
+        //     setQueryParams((params) => {
+        //         params.set("map_mode", "edit_boundary");
+        //         params.delete("edit_pin");
+        //         params.delete("pin_index");
+        //         return params;
+        //     })
+        // }
+
+        if (MapMode === "edit_boundary" && event.latLng) {
             const lat = event.latLng.lat();
             const lng = event.latLng.lng();
             setSiteBoundary([...siteBoundary, {lat, lng}])
-            console.log("Lat:", lat, "Lng:", lng);
         }
     };
 
@@ -76,7 +90,7 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
                 </GoogleMap>
 
-                {boundaryEditorMode && <MapOverLays/>}
+                {MapMode !== "view" && <MapOverLays/>}
 
             </div>
 

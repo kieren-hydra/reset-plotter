@@ -1,0 +1,1 @@
+export type MapMode = "view" | "edit_pin" | "edit_boundary" | null;

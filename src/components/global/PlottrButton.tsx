@@ -1,11 +1,13 @@
+import {ReactNode} from "react";
+
 type PlottrButtonProps = {
     handleClick: () => void
     label: string
     disabled?: boolean
-    icon?: React.ReactNode
+    icon?: ReactNode
     color: "white" | "orange"
 }
-const PlottrButton = ({ handleClick, label, disabled = false, icon, color } : PlottrButtonProps) => {
+const PlottrButton = ({handleClick, label, disabled = false, icon, color}: PlottrButtonProps) => {
 
     const colors = {
         "white": {
@@ -21,13 +23,11 @@ const PlottrButton = ({ handleClick, label, disabled = false, icon, color } : Pl
     }
 
     return (
-
-            <button
-                className={`w-fit h-10 flex gap-2 items-center border border-gray-300 rounded-md px-4 text-gray ${colors[color].bg} ${colors[color].text} ${colors[color].hover} whitespace-nowrap`}
-                onClick={handleClick}
-                disabled={disabled}
-            >{icon}{label}</button>
-
+        <button
+            className={`w-fit h-10 flex gap-2 items-center border border-gray-300 rounded-md px-4 text-gray ${colors[color].bg} ${colors[color].text} ${colors[color].hover} whitespace-nowrap`}
+            onClick={handleClick}
+            disabled={disabled}
+        >{icon}{label}</button>
     )
 }
 
