@@ -88,6 +88,15 @@ describe('Map Interactions',  () => {
         });
     });
 
+    it('should not remove a vertex that has not just been added', () => {
+
+        cy.enterEditorMode();
+            cy.addVertex();
+            cy.undoAddVertex();
+            cy.get('[data-cy="undo-btn"]')
+                .should('be.disabled')
+    })
+
     it('should open a pin editor when a vertex is clicked', () => {
 
         cy.openPinEditor().click({force: true});

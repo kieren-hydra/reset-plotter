@@ -73,3 +73,9 @@ Cypress.Commands.add('addVertex', (clickPosition = 'topLeft') => {
         .should('exist')
         .click(clickPosition);
 });
+
+Cypress.Commands.add('undoAddVertex', () => {
+    cy.get('[data-cy="undo-btn"]')
+        .should('exist')
+        .click();
+});

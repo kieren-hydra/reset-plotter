@@ -1,14 +1,23 @@
-import { Polygon } from '@react-google-maps/api';
+import {Polygon} from '@react-google-maps/api';
 import {useParams} from "react-router";
 import useResetAPIData from "../../hooks/useResetAPIData.tsx";
 import LoadingWheel from "../LoadingWheel.tsx";
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import {useEffect} from "react";
+
 const SiteBoundaryEditable = () => {
 
     const {companyIdParam, siteIdParam} = useParams()
     const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
-    const { setSiteId, setSiteName, setSiteBoundary, siteBoundary, siteId, setCompanyName } = useEditSiteStore()
+    const {
+        setSiteId,
+        setSiteName,
+        setSiteBoundary,
+        siteBoundary,
+        siteId,
+        setCompanyName,
+        setInitialVertexCount
+    } = useEditSiteStore()
     const colour = "orange"
 
     //This sets the site boundary in the store, unless it already exist in the store - KACM
@@ -16,17 +25,18 @@ const SiteBoundaryEditable = () => {
 
         const existingBoundaryInStore = siteBoundary && siteId?.toString() === siteIdParam
 
-        if(singleSiteData && !existingBoundaryInStore) {
-        const { name, id, boundary, parentCompanyName } = singleSiteData
-        setSiteId(id)
-        setSiteBoundary(boundary)
-        setSiteName(name)
-        setCompanyName(parentCompanyName)
+        if (singleSiteData && !existingBoundaryInStore) {
+            const {name, id, boundary, parentCompanyName} = singleSiteData
+            setSiteId(id)
+            setSiteBoundary(boundary)
+            setSiteName(name)
+            setCompanyName(parentCompanyName)
+            setInitialVertexCount(boundary.length)
         }
     }, [setSiteBoundary, setSiteId, setSiteName, singleSiteData, siteBoundary, siteId, siteIdParam]);
 
     if (isLoading) {
-        return <LoadingWheel size={"large"} />
+        return <LoadingWheel size={"large"}/>
     }
 
     //TODO add error handling
@@ -39,7 +49,8 @@ const SiteBoundaryEditable = () => {
 
         return (
             <Polygon
-                onClick={() => {}}
+                onClick={() => {
+                }}
                 key={siteIdParam}
                 path={siteBoundary}
                 options={{

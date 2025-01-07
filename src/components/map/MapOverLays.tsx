@@ -1,9 +1,22 @@
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import PlottrButton from "../global/PlottrButton.tsx";
+import {useEffect, useState} from "react";
 
 const MapOverLays = () => {
 
-    const {companyName, siteName, setSiteBoundary, siteBoundary} = useEditSiteStore()
+    const [canUndo, setCanUndo] = useState<boolean>(false)
+
+    const {
+        companyName,
+        siteName,
+        setSiteBoundary,
+        siteBoundary,
+        initialVertexCount
+    } = useEditSiteStore();
+
+    useEffect(() => {
+        setCanUndo(siteBoundary.length > initialVertexCount)
+    }, [siteBoundary, initialVertexCount]);
 
     const handleUndo = () => {
         setSiteBoundary(siteBoundary.slice(0, -1))
@@ -50,6 +63,7 @@ const MapOverLays = () => {
                     label={"Undo"}
                     color={"white"}
                     icon={<i className="ri-arrow-go-back-line"></i>}
+                    disabled={!canUndo}
                 />
             </div>
 

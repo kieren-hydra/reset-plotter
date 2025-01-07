@@ -13,13 +13,13 @@ const PlottrButton = ({dataCy, handleClick, label, disabled = false, icon, color
     const colors = {
         "white": {
             bg: "bg-white",
-            text: "text-gray",
-            hover: "hover:bg-gray-50"
+            text: disabled ? "text-gray-400" : "text-gray",
+            hover: disabled ? "" : "hover:bg-gray-50"
         },
         "orange": {
             bg: "bg-orange",
-            text: "text-white",
-            hover: "hover:bg-amber-400"
+            text: disabled ? "text-gray-400" : "text-white",
+            hover: disabled ? "" : "hover:bg-amber-400"
         }
     }
 

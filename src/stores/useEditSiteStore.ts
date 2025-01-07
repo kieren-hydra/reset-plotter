@@ -14,6 +14,10 @@ type EditSiteStoreState = {
 
     siteBoundary: Boundary
     setSiteBoundary: (siteBoundary: Boundary) => void
+
+    initialVertexCount: number
+    setInitialVertexCount: (initialVertexCount: number) => void
+
 }
 
 export const useEditSiteStore = create(
@@ -22,10 +26,12 @@ export const useEditSiteStore = create(
         siteName: "",
         companyName: "",
         siteBoundary: [],
+        initialVertexCount: 0,
         setSiteId: (siteId: number | null) => set({ siteId }),
         setCompanyName: (companyName: string) => set({ companyName }),
         setSiteName: (siteName: string) => set({ siteName }),
         setSiteBoundary: (siteBoundary: Boundary) => set({ siteBoundary }),
+        setInitialVertexCount: (initialVertexCount: number) => set({ initialVertexCount }),
     }), {
         name: "reset-plottr-store",
     })
