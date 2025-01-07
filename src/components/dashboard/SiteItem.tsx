@@ -24,6 +24,7 @@ const SiteItem = ({siteData}: SiteItemProps) => {
             <ListItemContainer
                 isSelected={isSelected}
                 path={path}
+                dataCy="site-item"
             >
 
                 <div className="flex gap-2 items-center">

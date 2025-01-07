@@ -10,7 +10,8 @@ const MapOverLays = () => {
     }
 
     return (
-        <div className="absolute flex gap-2 bg-white mx-4 my-2 w-[calc(100%-32px)] rounded-lg p-4 text-gray">
+        <div data-cy="geofence-editor"
+             className="absolute flex gap-2 bg-white mx-4 my-2 w-[calc(100%-32px)] rounded-lg p-4 text-gray">
             <div>
                 <div className="flex gap-2 items-center">
                     <p>{companyName || "Unknown Company"}</p>
@@ -24,14 +25,18 @@ const MapOverLays = () => {
 
             <div className="flex gap-2 justify-end grow items-end">
                 <PlottrButton
-                    handleClick={() => {console.log("reload clicked")}}
+                    handleClick={() => {
+                        console.log("reload clicked")
+                    }}
                     color="white"
                     label={"Reload from Live"}
                     icon={<i className="ri-restart-line text-xl text-orange"></i>}
                 />
 
                 <PlottrButton
-                    handleClick={() => {console.log("save clicked")}}
+                    handleClick={() => {
+                        console.log("save clicked")
+                    }}
                     color="orange"
                     label={"Save changes"}
                 />
@@ -39,10 +44,12 @@ const MapOverLays = () => {
             </div>
 
             <div className="absolute bottom-[-3rem] left-0">
-                <PlottrButton handleClick={handleUndo}
-                              label={"Undo"}
-                              color={"white"}
-                              icon={<i className="ri-arrow-go-back-line"></i>}
+                <PlottrButton
+                    dataCy="undo-btn"
+                    handleClick={handleUndo}
+                    label={"Undo"}
+                    color={"white"}
+                    icon={<i className="ri-arrow-go-back-line"></i>}
                 />
             </div>
 

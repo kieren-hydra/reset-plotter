@@ -21,7 +21,8 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
 
     return (
         <>
-            <div className="my-4 mx-2 pb-4 flex flex-col gap-2 border-b border-b-gray-light">
+            <div data-cy="site-editor"
+                 className="my-4 mx-2 pb-4 flex flex-col gap-2 border-b border-b-gray-light">
                 <p>{hasBoundary ? "Edit Boundary" : "Add Boundary"}</p>
                 <small className="text-gray-500">Click on the map to place at least three pins to define a
                     boundary</small>
@@ -35,7 +36,8 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
                 </div>
             </div>
 
-            <div className="my-4 mx-2 pb-4 flex flex-col gap-2 border-b border-b-gray-light">
+            <div data-cy="terminal-list"
+                 className="my-4 mx-2 pb-4 flex flex-col gap-2 border-b border-b-gray-light">
                 <p>Available Terminals</p>
 
                 <TerminalList terminals={terminals}/>

@@ -22,7 +22,7 @@ const SiteMap = () => {
             {mapMode === "view" ? <SiteBoundaryStatic /> : <SiteBoundaryEditable />}
             {mapMode !== "view" && <SiteVertices />}
             {mapMode === "edit_pin" && <PinEditor />}
-            <Terminals />
+            {/*<Terminals />*/}
         </>
     );
 };

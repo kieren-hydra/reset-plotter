@@ -5,7 +5,7 @@ import CompanyList from "./CompanyList.tsx";
 const Dashboard = () => {
 
     return (
-        <div className="h-screen w-[439px] p-4">
+        <div data-cy="dashboard" className="h-screen w-[439px] p-4">
 
             <Header/>
 

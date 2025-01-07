@@ -8,7 +8,7 @@ type SiteListProps = {
 const SiteList = ({ sites }: SiteListProps) => {
 
     return (
-        <div>
+        <div data-cy="site-list">
             <p className="font-bold my-4 mx-2">Available sites</p>
             <div>
                 {sites && sites.length > 0 ? (

@@ -71,7 +71,7 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
     return (
         <ErrorBoundary fallback={<ErrorFallback/>}>
 
-            <div className={"flex flex-1 w-full h-full relative"}>
+            <div data-cy="google-map" className={"flex flex-1 w-full h-full relative"}>
 
                 <GoogleMap
                     mapContainerStyle={containerStyle}

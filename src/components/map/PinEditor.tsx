@@ -48,7 +48,9 @@ const PinEditor = () => {
 
                 >
                     <ClickAwayListener onClickAway={handleClickAway}>
-                    <div className="flex flex-col w-fit h-fit text-gray bg-white rounded-md p-2 border-gray-300 hover:bg-gray-50 whitespace-nowrap pointer-events-auto">
+                    <div
+                        data-cy="pin-editor"
+                        className="flex flex-col w-fit h-fit text-gray bg-white rounded-md p-2 border-gray-300 hover:bg-gray-50 whitespace-nowrap pointer-events-auto">
 
                         <button
                             className="flex gap-2 items-center border-b-2 border-gray-300 pb-1"

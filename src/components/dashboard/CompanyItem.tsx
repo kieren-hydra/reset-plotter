@@ -11,7 +11,7 @@ type CompanyItemProps = {
 const CompanyItem = ({companyData}: CompanyItemProps) => {
     const {name, id, sites} = companyData
 
-    const { companyIdParam } = useParams()
+    const {companyIdParam} = useParams()
 
     const isSelected = id.toString() === companyIdParam
 
@@ -21,7 +21,8 @@ const CompanyItem = ({companyData}: CompanyItemProps) => {
         <div>
             <ListItemContainer
                 isSelected={isSelected}
-            path={path}
+                path={path}
+                dataCy="company-item"
             >
 
                 <div className="flex gap-2 items-center">
