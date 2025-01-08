@@ -1,26 +1,13 @@
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import PlottrButton from "../global/PlottrButton.tsx";
-import {useEffect, useState} from "react";
+import UndoButton from "./UndoButton.tsx";
 
 const MapOverLays = () => {
 
-    const [canUndo, setCanUndo] = useState<boolean>(false)
-
     const {
         companyName,
-        siteName,
-        setSiteBoundary,
-        siteBoundary,
-        initialVertexCount
+        siteName
     } = useEditSiteStore();
-
-    useEffect(() => {
-        setCanUndo(siteBoundary.length > initialVertexCount)
-    }, [siteBoundary, initialVertexCount]);
-
-    const handleUndo = () => {
-        setSiteBoundary(siteBoundary.slice(0, -1))
-    }
 
     return (
         <div data-cy="geofence-editor"
@@ -57,14 +44,7 @@ const MapOverLays = () => {
             </div>
 
             <div className="absolute bottom-[-3rem] left-0">
-                <PlottrButton
-                    dataCy="undo-btn"
-                    handleClick={handleUndo}
-                    label={"Undo"}
-                    color={"white"}
-                    icon={<i className="ri-arrow-go-back-line"></i>}
-                    disabled={!canUndo}
-                />
+                <UndoButton/>
             </div>
 
         </div>

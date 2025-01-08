@@ -1,7 +1,6 @@
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import SiteBoundaryStatic from "./SiteBoundaryStatic.tsx";
-import Terminals from "./Terminals.tsx";
 import SiteVertices from "./SiteVertices.tsx";
 import SiteBoundaryEditable from "./SiteBoundaryEditable.tsx";
 import PinEditor from "./PinEditor.tsx";

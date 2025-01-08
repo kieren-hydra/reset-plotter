@@ -55,9 +55,9 @@ Cypress.Commands.add('enterEditorMode', () => {
 
 Cypress.Commands.add('openPinEditor', () => {
     cy.enterEditorMode();
-    cy.get('div[role="button"]').first().within(() => {
-        cy.get('img').should('exist');
-    }).should('exist').and('be.visible');
+    cy.get('div[role="button"]').first().should('exist')
+        .and('be.visible')
+        .click({force: true});
 });
 
 Cypress.Commands.add('getVertexCount', () => {
@@ -79,3 +79,27 @@ Cypress.Commands.add('undoAddVertex', () => {
         .should('exist')
         .click();
 });
+
+Cypress.Commands.add('getPinPosition', () => {
+    return cy.get('div[role="button"]').first()
+        .should('exist')
+        .and('be.visible')
+        .then(($pin) => {
+            return {
+                top: $pin.css('top'),
+                left: $pin.css('left'),
+            };
+        });
+});
+
+Cypress.Commands.add('movePin', () => {
+    cy.get('[data-cy="pin-move"]')
+        .should('exist')
+        .and('be.visible')
+        .click( {force: true});
+
+    // Click on the map
+    cy.get('[data-cy="google-map"]')
+        .should('exist')
+        .click(200, 400);
+})

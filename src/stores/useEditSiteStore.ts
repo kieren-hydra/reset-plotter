@@ -1,6 +1,7 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware';
+import {create} from 'zustand'
+import {persist} from 'zustand/middleware';
 import {Boundary} from "../types/boundary.ts";
+import {Coordinate} from "../types/coordinate.ts";
 
 type EditSiteStoreState = {
     siteId: number | null
@@ -18,6 +19,8 @@ type EditSiteStoreState = {
     initialVertexCount: number
     setInitialVertexCount: (initialVertexCount: number) => void
 
+    lastPinLocation: { index: number, coords : Coordinate } | null
+    setLastPinLocation: (lastPinLocation: { index: number, coords : Coordinate}) => void
 }
 
 export const useEditSiteStore = create(
@@ -27,11 +30,13 @@ export const useEditSiteStore = create(
         companyName: "",
         siteBoundary: [],
         initialVertexCount: 0,
-        setSiteId: (siteId: number | null) => set({ siteId }),
-        setCompanyName: (companyName: string) => set({ companyName }),
-        setSiteName: (siteName: string) => set({ siteName }),
-        setSiteBoundary: (siteBoundary: Boundary) => set({ siteBoundary }),
-        setInitialVertexCount: (initialVertexCount: number) => set({ initialVertexCount }),
+        lastPinLocation: null,
+        setSiteId: (siteId: number | null) => set({siteId}),
+        setCompanyName: (companyName: string) => set({companyName}),
+        setSiteName: (siteName: string) => set({siteName}),
+        setSiteBoundary: (siteBoundary: Boundary) => set({siteBoundary}),
+        setInitialVertexCount: (initialVertexCount: number) => set({initialVertexCount}),
+        setLastPinLocation: (lastPinLocation: { index: number, coords : Coordinate}) => set({lastPinLocation}),
     }), {
         name: "reset-plottr-store",
     })

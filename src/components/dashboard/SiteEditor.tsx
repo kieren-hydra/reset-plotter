@@ -16,7 +16,8 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
     const [queryParams, setQueryParams] = useSearchParams();
 
     const handleClick = () => {
-        setQueryParams({ ...Object.fromEntries(queryParams), map_mode: "edit_boundary" });
+        queryParams.set("map_mode", "edit_boundary");
+        setQueryParams(queryParams);
     }
 
     return (

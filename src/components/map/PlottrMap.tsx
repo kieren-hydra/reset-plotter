@@ -16,13 +16,17 @@ type MapMode = "view" | "edit_boundary" | "edit_pin" | "delete_pin" | "move_pin"
 const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
     const [queryParams, setQueryParams] = useSearchParams();
-    const {setSiteBoundary, siteBoundary} = useEditSiteStore()
+    const {setSiteBoundary, siteBoundary, setLastPinLocation} = useEditSiteStore()
     const [MapMode, setMapMode] = useState<MapMode>("view");
+    const [pinIndex, setPinIndex] = useState<number | null>(null);
 
     useEffect(() => {
 
         const mapModeParam = queryParams.get("map_mode");
         setMapMode(mapModeParam as MapMode || "view");
+
+        const pinIndexParam = queryParams.get("pin_index");
+        setPinIndex(pinIndexParam ? Number(pinIndexParam) : null);
 
     }, [queryParams]);
 
@@ -41,20 +45,28 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
     const handleMapClick = (event: google.maps.MapMouseEvent) => {
 
-        // if (MapMode === "edit_pin") {
-        //
-        //     setQueryParams((params) => {
-        //         params.set("map_mode", "edit_boundary");
-        //         params.delete("edit_pin");
-        //         params.delete("pin_index");
-        //         return params;
-        //     })
-        // }
+        if (MapMode === "move_pin" && event.latLng && pinIndex != null) {
+            const lat = event.latLng.lat();
+            const lng = event.latLng.lng();
+
+            setLastPinLocation({index: pinIndex, coords: siteBoundary[pinIndex]})
+            setSiteBoundary([...siteBoundary.slice(0, pinIndex), {lat, lng}, ...siteBoundary.slice(pinIndex + 1)])
+
+            queryParams.set("map_mode", "edit_boundary");
+            queryParams.set("undo_mode", "move_pin");
+            queryParams.delete("pin_index");
+            setQueryParams(queryParams);
+            return
+        }
 
         if (MapMode === "edit_boundary" && event.latLng) {
             const lat = event.latLng.lat();
             const lng = event.latLng.lng();
             setSiteBoundary([...siteBoundary, {lat, lng}])
+
+            queryParams.set("undo_mode", "add_pin");
+            setQueryParams(queryParams);
+            return
         }
     };
 
@@ -71,7 +83,7 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
     return (
         <ErrorBoundary fallback={<ErrorFallback/>}>
 
-            <div data-cy="google-map" className={"flex flex-1 w-full h-full relative"}>
+            <div data-cy="google-map" className={"flex flex-1 w-full h-full relative "}>
 
                 <GoogleMap
                     mapContainerStyle={containerStyle}

@@ -12,7 +12,7 @@ const PinEditor = () => {
     const [pinCoords, setPinCoords] = useState<Coordinate | undefined>()
 
     const pinIndex = queryParams.get("pin_index");
-    const {siteBoundary, setSiteBoundary} = useEditSiteStore();
+    const {siteBoundary, setSiteBoundary, setLastPinLocation} = useEditSiteStore();
 
     useEffect(() => {
 
@@ -23,19 +23,24 @@ const PinEditor = () => {
     }, [pinIndex, siteBoundary]);
 
     const handleClickMove = () => {
-        setQueryParams({ ...Object.fromEntries(queryParams), map_mode: "move_pin" });
+        queryParams.set("map_mode", "move_pin");
+        setQueryParams(queryParams);
     }
 
     const handleClickDelete = () => {
         if (pinIndex !== null && siteBoundary) {
+            setLastPinLocation({index: Number(pinIndex), coords: siteBoundary[Number(pinIndex)]})
             const updatedBoundary = siteBoundary.filter((_, index) => index !== Number(pinIndex));
             setSiteBoundary(updatedBoundary);
-            setQueryParams({ ...Object.fromEntries(queryParams), map_mode: "edit_boundary" });
+            queryParams.set("map_mode", "edit_boundary");
+            queryParams.set("undo_mode", "delete_pin");
+            setQueryParams(queryParams);
         }
     };
 
     const handleClickAway = () => {
-        setQueryParams({ ...Object.fromEntries(queryParams), map_mode: "edit_boundary" });
+        queryParams.set("map_mode", "edit_boundary");
+        setQueryParams(queryParams);
     }
 
     return (
@@ -53,6 +58,7 @@ const PinEditor = () => {
                         className="flex flex-col w-fit h-fit text-gray bg-white rounded-md p-2 border-gray-300 hover:bg-gray-50 whitespace-nowrap pointer-events-auto">
 
                         <button
+                            data-cy="pin-move"
                             className="flex gap-2 items-center border-b-2 border-gray-300 pb-1"
                             onClick={() => handleClickMove()}
                         >
@@ -60,6 +66,7 @@ const PinEditor = () => {
                         </button>
 
                         <button
+                            data-cy="pin-delete"
                             className="flex gap-2 items-center pt-1"
                             onClick={() => handleClickDelete()}
                         >
