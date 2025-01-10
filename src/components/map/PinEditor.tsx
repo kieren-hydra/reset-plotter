@@ -41,7 +41,7 @@ const PinEditor = () => {
     const handleClickAway = () => {
         queryParams.set("map_mode", "edit_boundary");
         setQueryParams(queryParams);
-    }
+    };
 
     return (
         <>

@@ -18,7 +18,7 @@ const PlottrButton = ({dataCy, handleClick, label, disabled = false, icon, color
         },
         "orange": {
             bg: "bg-orange",
-            text: disabled ? "text-gray-400" : "text-white",
+            text: disabled ? "text-gray-200" : "text-white",
             hover: disabled ? "" : "hover:bg-amber-400"
         }
     }
@@ -26,7 +26,11 @@ const PlottrButton = ({dataCy, handleClick, label, disabled = false, icon, color
     return (
         <button
             data-cy={dataCy}
-            className={`w-fit h-10 flex gap-2 items-center border border-gray-300 rounded-md px-4 text-gray ${colors[color].bg} ${colors[color].text} ${colors[color].hover} whitespace-nowrap`}
+            className={
+                `w-fit h-10 flex gap-2 items-center border border-gray-300 rounded-md px-4 text-gray 
+                ${colors[color].bg} ${colors[color].text} ${colors[color].hover} whitespace-nowrap 
+                ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`
+            }
             onClick={handleClick}
             disabled={disabled}
         >{icon}{label}</button>

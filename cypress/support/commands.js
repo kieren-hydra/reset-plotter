@@ -68,10 +68,10 @@ Cypress.Commands.add('verifyVertexCount', (expectedCount) => {
     cy.get('div[role="button"]').should('have.length', expectedCount);
 });
 
-Cypress.Commands.add('addVertex', (clickPosition = 'topLeft') => {
+Cypress.Commands.add('addVertex', () => {
     cy.get('[data-cy="google-map"]')
         .should('exist')
-        .click(clickPosition);
+        .click(200, 350);
 });
 
 Cypress.Commands.add('undoAddVertex', () => {

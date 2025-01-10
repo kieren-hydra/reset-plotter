@@ -1,13 +1,31 @@
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import PlottrButton from "../global/PlottrButton.tsx";
 import UndoButton from "./UndoButton.tsx";
+import {useSearchParams} from "react-router";
+import {useEffect, useState} from "react";
 
 const MapOverLays = () => {
 
-    const {
-        companyName,
-        siteName
-    } = useEditSiteStore();
+    const {companyName, siteName} = useEditSiteStore();
+
+    const [saved, setSaved] = useState<boolean>(true);
+
+    const [queryParams, setQueryParams] = useSearchParams();
+
+    const savedParam = queryParams.get("saved");
+
+    useEffect(() => {
+        if (savedParam === "true") {
+            setSaved(true);
+        } else if (savedParam === "false") {
+            setSaved(false);
+        }
+    }, [savedParam]);
+
+    const handleReload = () => {
+        queryParams.set("warning", "reload_live_boundary")
+        setQueryParams(queryParams)
+    }
 
     return (
         <div data-cy="geofence-editor"
@@ -25,20 +43,22 @@ const MapOverLays = () => {
 
             <div className="flex gap-2 justify-end grow items-end">
                 <PlottrButton
-                    handleClick={() => {
-                        console.log("reload clicked")
-                    }}
+                    dataCy={"reload-btn"}
+                    handleClick={handleReload}
                     color="white"
+                    disabled={saved}
                     label={"Reload from Live"}
                     icon={<i className="ri-restart-line text-xl text-orange"></i>}
                 />
 
                 <PlottrButton
+                    dataCy={"save-btn"}
                     handleClick={() => {
                         console.log("save clicked")
                     }}
                     color="orange"
                     label={"Save changes"}
+                    disabled={saved}
                 />
 
             </div>

@@ -1,8 +1,7 @@
 import {GoogleMap, useJsApiLoader} from "@react-google-maps/api";
 import {useSearchParams} from "react-router";
-import LoadingWheel from "../LoadingWheel.tsx";
-import ErrorFallback from "../ErrorFallback.tsx";
-import {ErrorBoundary} from "react-error-boundary";
+import LoadingWheel from "../global/LoadingWheel.tsx";
+import ErrorFallback from "../global/ErrorFallback.tsx";
 import {ReactNode, useEffect, useState} from "react";
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import MapOverLays from "./MapOverLays.tsx";
@@ -21,7 +20,6 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
     const [pinIndex, setPinIndex] = useState<number | null>(null);
 
     useEffect(() => {
-
         const mapModeParam = queryParams.get("map_mode");
         setMapMode(mapModeParam as MapMode || "view");
 
@@ -55,8 +53,8 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
             queryParams.set("map_mode", "edit_boundary");
             queryParams.set("undo_mode", "move_pin");
             queryParams.delete("pin_index");
-            setQueryParams(queryParams);
-            return
+            queryParams.set("saved", "false");
+            setQueryParams(queryParams)
         }
 
         if (MapMode === "edit_boundary" && event.latLng) {
@@ -65,8 +63,8 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
             setSiteBoundary([...siteBoundary, {lat, lng}])
 
             queryParams.set("undo_mode", "add_pin");
-            setQueryParams(queryParams);
-            return
+            queryParams.set("saved", "false");
+            setQueryParams(queryParams)
         }
     };
 
@@ -81,32 +79,29 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
     };
 
     return (
-        <ErrorBoundary fallback={<ErrorFallback/>}>
+        <div data-cy="google-map" className={"flex flex-1 w-full h-full relative"}>
 
-            <div data-cy="google-map" className={"flex flex-1 w-full h-full relative "}>
+            <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={15}
+                onClick={handleMapClick}
+                options={{
+                    mapTypeControl: true, // Enable the map type control
+                    mapTypeControlOptions: {
+                        position: google.maps.ControlPosition.BOTTOM_LEFT,
+                        style: google.maps.MapTypeControlStyle.DEFAULT,
+                    },
+                    draggableCursor: "crosshair",
+                }}
+            >
+                {children}
 
-                <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={center}
-                    zoom={15}
-                    onClick={handleMapClick}
-                    options={{
-                        mapTypeControl: true, // Enable the map type control
-                        mapTypeControlOptions: {
-                            position: google.maps.ControlPosition.BOTTOM_LEFT,
-                            style: google.maps.MapTypeControlStyle.DEFAULT,
-                        },
-                    }}
-                >
-                    {children}
+            </GoogleMap>
 
-                </GoogleMap>
+            {MapMode !== "view" && <MapOverLays/>}
 
-                {MapMode !== "view" && <MapOverLays/>}
-
-            </div>
-
-        </ErrorBoundary>
+        </div>
     );
 };
 

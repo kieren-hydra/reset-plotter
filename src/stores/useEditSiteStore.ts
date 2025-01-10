@@ -16,9 +16,6 @@ type EditSiteStoreState = {
     siteBoundary: Boundary
     setSiteBoundary: (siteBoundary: Boundary) => void
 
-    initialVertexCount: number
-    setInitialVertexCount: (initialVertexCount: number) => void
-
     lastPinLocation: { index: number, coords : Coordinate } | null
     setLastPinLocation: (lastPinLocation: { index: number, coords : Coordinate}) => void
 }
@@ -29,15 +26,13 @@ export const useEditSiteStore = create(
         siteName: "",
         companyName: "",
         siteBoundary: [],
-        initialVertexCount: 0,
         lastPinLocation: null,
         setSiteId: (siteId: number | null) => set({siteId}),
         setCompanyName: (companyName: string) => set({companyName}),
         setSiteName: (siteName: string) => set({siteName}),
         setSiteBoundary: (siteBoundary: Boundary) => set({siteBoundary}),
-        setInitialVertexCount: (initialVertexCount: number) => set({initialVertexCount}),
         setLastPinLocation: (lastPinLocation: { index: number, coords : Coordinate}) => set({lastPinLocation}),
     }), {
-        name: "reset-plottr-store",
+        name: import.meta.env.VITE_LOCAL_STORAGE_KEY,
     })
 )

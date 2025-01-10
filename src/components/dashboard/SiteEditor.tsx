@@ -2,7 +2,7 @@ import {Terminal} from "../../types/terminal.ts";
 import {Boundary} from "../../types/boundary.ts";
 import PlottrButton from "../global/PlottrButton.tsx";
 import TerminalList from "./TerminalList.tsx";
-import { useSearchParams } from "react-router";
+import {useSearchParams} from "react-router";
 
 type SiteEditorProps = {
     terminals: Terminal[],
@@ -15,10 +15,17 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
 
     const [queryParams, setQueryParams] = useSearchParams();
 
+    const saved = queryParams.get("saved")
+
     const handleClick = () => {
-        queryParams.set("map_mode", "edit_boundary");
+        queryParams.set("map_mode", "edit_boundary")
+
+        if (saved === null) {
+            queryParams.set("saved", "true")
+        }
+
         setQueryParams(queryParams);
-    }
+    };
 
     return (
         <>

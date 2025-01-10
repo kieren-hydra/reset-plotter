@@ -1,7 +1,7 @@
 import {Polygon} from '@react-google-maps/api';
-import {useParams} from "react-router";
+import {useParams, useSearchParams} from "react-router";
 import useResetAPIData from "../../hooks/useResetAPIData.tsx";
-import LoadingWheel from "../LoadingWheel.tsx";
+import LoadingWheel from "../global/LoadingWheel.tsx";
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import {useEffect} from "react";
 
@@ -9,6 +9,10 @@ const SiteBoundaryEditable = () => {
 
     const {companyIdParam, siteIdParam} = useParams()
     const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
+    const [queryParams, setQueryParams]  = useSearchParams();
+    const colour = "orange";
+    const reloadBoundary = queryParams.get("action") === "reload_boundary";
+
     const {
         setSiteId,
         setSiteName,
@@ -16,24 +20,25 @@ const SiteBoundaryEditable = () => {
         siteBoundary,
         siteId,
         setCompanyName,
-        setInitialVertexCount
     } = useEditSiteStore()
-    const colour = "orange"
 
     //This sets the site boundary in the store, unless it already exist in the store - KACM
     useEffect(() => {
 
         const existingBoundaryInStore = siteBoundary && siteId?.toString() === siteIdParam
 
-        if (singleSiteData && !existingBoundaryInStore) {
+        if (singleSiteData && (!existingBoundaryInStore || reloadBoundary)) {
             const {name, id, boundary, parentCompanyName} = singleSiteData
             setSiteId(id)
             setSiteBoundary(boundary)
             setSiteName(name)
             setCompanyName(parentCompanyName)
-            setInitialVertexCount(boundary.length)
+
+            queryParams.delete("action")
+            queryParams.delete("undo_mode")
+            setQueryParams(queryParams)
         }
-    }, [setSiteBoundary, setSiteId, setSiteName, singleSiteData, siteBoundary, siteId, siteIdParam]);
+    }, [singleSiteData, siteBoundary, siteId, siteIdParam]);
 
     if (isLoading) {
         return <LoadingWheel size={"large"}/>

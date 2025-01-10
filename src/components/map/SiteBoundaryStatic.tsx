@@ -1,7 +1,7 @@
 import { Polygon } from '@react-google-maps/api';
 import {useParams} from "react-router";
 import useResetAPIData from "../../hooks/useResetAPIData.tsx";
-import LoadingWheel from "../LoadingWheel.tsx";
+import LoadingWheel from "../global/LoadingWheel.tsx";
 import {useEffect, useState} from "react";
 const SiteBoundaryStatic = () => {
 

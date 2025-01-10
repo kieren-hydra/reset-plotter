@@ -1,8 +1,8 @@
 import CompanyItem from "./CompanyItem.tsx";
 import {Company} from "../../types/company.ts";
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from "../ErrorFallback.tsx";
-import LoadingWheel from "../LoadingWheel.tsx";
+import ErrorFallback from "../global/ErrorFallback.tsx";
+import LoadingWheel from "../global/LoadingWheel.tsx";
 import useResetAPIData from "../../hooks/useResetAPIData.tsx";
 
 const CompanyList = () => {
