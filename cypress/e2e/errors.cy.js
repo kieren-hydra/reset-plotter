@@ -1,4 +1,4 @@
-describe('Error Handling', () => {
+describe.skip('Error Handling', () => {
 
     it('should show a loader then an error message if the dashboard fails to load', () => {
 

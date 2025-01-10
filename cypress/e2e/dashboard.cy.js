@@ -4,54 +4,71 @@ describe('Dashboard Interactions', () => {
         cy.visit('/');
     });
 
-    describe('The search bar', () => {
-        //TODO : Add tests for the search bar - KACM
+    it('should show a list of sites when a company is clicked', () => {
+
+        cy.selectFirstCompany();
+        cy.get('[data-cy="site-list"]').should('exist');
     });
 
-    describe('The main dashboard', () => {
+    it('should collapse the list of sites when clicked again', () => {
 
-        it('should show a list of sites when a company is clicked', () => {
+        cy.selectFirstCompany();
+        cy.get('[data-cy="site-list"]').should('exist');
+        cy.selectFirstCompany();
+        cy.get('[data-cy="site-list"]').should('not.exist');
+    });
 
-            cy.selectFirstCompany();
-            cy.get('[data-cy="site-list"]').should('exist');
-        });
+    it('should show the site editor and terminal list when the site is clicked', () => {
 
-        it('should collapse the list of sites when clicked again', () => {
+        cy.selectFirstSite();
+        cy.get('[data-cy="site-editor"]').should('exist');
+        cy.get('[data-cy="terminal-list"]').should('exist');
+    });
 
-            cy.selectFirstCompany();
-            cy.get('[data-cy="site-list"]').should('exist');
-            cy.selectFirstCompany();
-            cy.get('[data-cy="site-list"]').should('not.exist');
-        });
+    it('should hide the site editor and terminal list when the site is clicked again', () => {
 
-        it('should show the site editor and terminal list when the site is clicked', () => {
+        cy.selectFirstSite();
+        cy.get('[data-cy="site-item"]').first().click();
+        cy.get('[data-cy="site-editor"]').should('not.exist');
+        cy.get('[data-cy="terminal-list"]').should('not.exist');
+    });
 
-            cy.selectFirstSite();
-            cy.get('[data-cy="site-editor"]').should('exist');
-            cy.get('[data-cy="terminal-list"]').should('exist');
-        });
+    it.skip('should still show the boundary on the map when the page is refreshed', () => {
 
-        it('should hide the site editor and terminal list when the site is clicked again', () => {
+        //TODO : Add test logic - KACM
+    });
 
-            cy.selectFirstSite();
-            cy.get('[data-cy="site-item"]').first().click();
-            cy.get('[data-cy="site-editor"]').should('not.exist');
-            cy.get('[data-cy="terminal-list"]').should('not.exist');
-        });
+    it('should show the geofence editor when the Geofence Editor button is clicked', () => {
 
-        it('should show the geofence editor when the Geofence Editor button is clicked', () => {
+        cy.selectFirstSite();
+        cy.get('button').contains('Geofence Editor')
+            .should('be.visible')
+            .and('not.be.disabled')
+            .click();
 
-            cy.selectFirstSite();
-            cy.get('button').contains('Geofence Editor')
-                .should('be.visible')
-                .and('not.be.disabled')
-                .click();
+        cy.get('[data-cy="geofence-editor"]').should('exist');
+    });
 
-            cy.get('[data-cy="geofence-editor"]').should('exist');
-        });
+    describe('In boundary editor mode', () => {
 
-        it('should still show the boundary on the map when the page is refreshed', () => {
+        it.skip('should show a warning modal when selecting a new company if there is an unsaved boundary', () => {
+
             //TODO : Add test logic - KACM
         });
+
+        it.skip('should show a warning modal when selecting a new site if there is an unsaved boundary', () => {
+
+            //TODO : Add test logic - KACM
+        });
+
+        it.skip('should show a warning modal when selecting a terminal if there is an unsaved boundary', () => {
+
+            //TODO : Add test logic - KACM
+        });
+    });
+
+    describe.skip('In terminal editor mode', () => {
+
+        //TODO: Add relevant tests - KACM
     });
 });
