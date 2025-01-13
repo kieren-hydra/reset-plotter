@@ -34,6 +34,7 @@ const PinEditor = () => {
             setSiteBoundary(updatedBoundary);
             queryParams.set("map_mode", "edit_boundary");
             queryParams.set("undo_mode", "delete_pin");
+            queryParams.set("saved", "false");
             setQueryParams(queryParams);
         }
     };

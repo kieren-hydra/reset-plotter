@@ -28,14 +28,11 @@ describe('Dashboard Interactions', () => {
     it('should hide the site editor and terminal list when the site is clicked again', () => {
 
         cy.selectFirstSite();
-        cy.get('[data-cy="site-item"]').first().click();
+        cy.get('[data-cy="site-item"]')
+            .first()
+            .click();
         cy.get('[data-cy="site-editor"]').should('not.exist');
         cy.get('[data-cy="terminal-list"]').should('not.exist');
-    });
-
-    it.skip('should still show the boundary on the map when the page is refreshed', () => {
-
-        //TODO : Add test logic - KACM
     });
 
     it('should show the geofence editor when the Geofence Editor button is clicked', () => {
@@ -51,14 +48,43 @@ describe('Dashboard Interactions', () => {
 
     describe('In boundary editor mode', () => {
 
-        it.skip('should show a warning modal when selecting a new company if there is an unsaved boundary', () => {
+        it('should show a warning modal when selecting a the SAME company if there is an unsaved boundary', () => {
 
-            //TODO : Add test logic - KACM
+            cy.enterEditorMode();
+            cy.addVertex();
+            cy.get('[data-cy="company-item"]')
+                .first()
+                .click();
+
+            cy.get('[data-cy="warning-modal"]')
+                .should("exist")
         });
 
-        it.skip('should show a warning modal when selecting a new site if there is an unsaved boundary', () => {
+        it('should show a warning modal when selecting a NEW company if there is an unsaved boundary', () => {
 
-            //TODO : Add test logic - KACM
+            cy.enterEditorMode();
+            cy.addVertex();
+
+            //select the second company, whilst the first company/site has been edited
+            cy.get('[data-cy="company-item"]')
+                .eq(1)
+                .click();
+
+            cy.get('[data-cy="warning-modal"]')
+                .should("exist")
+        });
+
+        it('should show a warning modal when selecting a new site if there is an unsaved boundary', () => {
+
+            cy.enterEditorMode();
+            cy.addVertex();
+
+            cy.get('[data-cy="site-item"]')
+                .eq(1)
+                .click();
+
+            cy.get('[data-cy="warning-modal"]')
+                .should("exist")
         });
 
         it.skip('should show a warning modal when selecting a terminal if there is an unsaved boundary', () => {

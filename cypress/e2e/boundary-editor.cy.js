@@ -1,4 +1,3 @@
-
 describe('Boundary Editor', () => {
 
     beforeEach(() => {
@@ -61,42 +60,32 @@ describe('Boundary Editor', () => {
         });
 
         it('should move the pin if "Move Pin" is clicked and then the map is clicked', () => {
-            let initialPosition = {};
+            cy.getPinPosition().then(initialPosition => {
 
-            // Get the initial top and left CSS properties of the pin
-            cy.get('div[role="button"]').first()
-                .should('exist')
-                .and('be.visible')
-                .then(($pin) => {
-                    initialPosition = {
+                // Click on the "Move Pin" button
+                cy.get('[data-cy="pin-move"]')
+                    .should('exist')
+                    .and('be.visible')
+                    .click({force: true});
+
+                cy.get('[data-cy="pin-editor"]').should('not.exist');
+
+                // Click on the map
+                cy.get('[data-cy="google-map"]')
+                    .should('exist')
+                    .click(200, 350);
+
+                // Compare the new top and left properties
+                cy.get('div[role="button"]').first().then(($pin) => {
+                    const newPosition = {
                         top: $pin.css('top'),
                         left: $pin.css('left'),
                     };
+
+                    // Assert that the top and left properties have changed
+                    expect(newPosition.top).not.to.equal(initialPosition.top);
+                    expect(newPosition.left).not.to.equal(initialPosition.left);
                 });
-
-            // Click on the "Move Pin" button
-            cy.get('[data-cy="pin-move"]')
-                .should('exist')
-                .and('be.visible')
-                .click({force: true});
-
-            cy.get('[data-cy="pin-editor"]').should('not.exist');
-
-            // Click on the map
-            cy.get('[data-cy="google-map"]')
-                .should('exist')
-                .click(200, 350);
-
-            // Compare the new top and left properties
-            cy.get('div[role="button"]').first().then(($pin) => {
-                const newPosition = {
-                    top: $pin.css('top'),
-                    left: $pin.css('left'),
-                };
-
-                // Assert that the top and left properties have changed
-                expect(newPosition.top).not.to.equal(initialPosition.top);
-                expect(newPosition.left).not.to.equal(initialPosition.left);
             });
         });
 

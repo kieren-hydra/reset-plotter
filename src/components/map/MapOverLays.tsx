@@ -3,24 +3,23 @@ import PlottrButton from "../global/PlottrButton.tsx";
 import UndoButton from "./UndoButton.tsx";
 import {useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
+import useOnClickHandlers from "../../hooks/useOnClickHandlers.tsx";
 
 const MapOverLays = () => {
 
     const {companyName, siteName} = useEditSiteStore();
-
     const [saved, setSaved] = useState<boolean>(true);
-
     const [queryParams, setQueryParams] = useSearchParams();
-
-    const savedParam = queryParams.get("saved");
+    const {handleSaveBoundary} = useOnClickHandlers();
 
     useEffect(() => {
+        const savedParam = queryParams.get("saved");
         if (savedParam === "true") {
             setSaved(true);
         } else if (savedParam === "false") {
             setSaved(false);
         }
-    }, [savedParam]);
+    }, [queryParams]);
 
     const handleReload = () => {
         queryParams.set("warning", "reload_live_boundary")
@@ -53,9 +52,7 @@ const MapOverLays = () => {
 
                 <PlottrButton
                     dataCy={"save-btn"}
-                    handleClick={() => {
-                        console.log("save clicked")
-                    }}
+                    handleClick={handleSaveBoundary}
                     color="orange"
                     label={"Save changes"}
                     disabled={saved}

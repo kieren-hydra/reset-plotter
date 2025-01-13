@@ -21,11 +21,15 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
     useEffect(() => {
         const mapModeParam = queryParams.get("map_mode");
-        setMapMode(mapModeParam as MapMode || "view");
-
         const pinIndexParam = queryParams.get("pin_index");
-        setPinIndex(pinIndexParam ? Number(pinIndexParam) : null);
 
+        if(!queryParams.has("map_mode")) {
+            queryParams.set("map_mode", "view")
+            setQueryParams(queryParams)
+        }
+
+        setMapMode(mapModeParam as MapMode || "view");
+        setPinIndex(pinIndexParam ? Number(pinIndexParam) : null);
     }, [queryParams]);
 
     // Load the Google Maps JavaScript API

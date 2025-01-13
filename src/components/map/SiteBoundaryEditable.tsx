@@ -11,7 +11,9 @@ const SiteBoundaryEditable = () => {
     const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
     const [queryParams, setQueryParams]  = useSearchParams();
     const colour = "orange";
-    const reloadBoundary = queryParams.get("action") === "reload_boundary";
+
+    //This param is triggered by the "Reload from live" button on modal- KACM
+    const loadBoundary = queryParams.get("action") === "load_boundary";
 
     const {
         setSiteId,
@@ -27,14 +29,17 @@ const SiteBoundaryEditable = () => {
 
         const existingBoundaryInStore = siteBoundary && siteId?.toString() === siteIdParam
 
-        if (singleSiteData && (!existingBoundaryInStore || reloadBoundary)) {
+        if (singleSiteData && (!existingBoundaryInStore || loadBoundary)) {
             const {name, id, boundary, parentCompanyName} = singleSiteData
             setSiteId(id)
             setSiteBoundary(boundary)
             setSiteName(name)
             setCompanyName(parentCompanyName)
 
+            //removes the params set by the Reload from live modal - KACM
             queryParams.delete("action")
+
+            //removes the param that allows the last action to be undone using the Undo... button - KACM
             queryParams.delete("undo_mode")
             setQueryParams(queryParams)
         }

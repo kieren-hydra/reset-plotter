@@ -23,7 +23,7 @@ describe('Modal Interactions', () => {
                 .click();
 
             cy.get('[data-cy="warning-modal"]')
-                .should("not.be.visible")
+                .should("not.exist")
         });
 
         it('should close the modal if the "Back to..." button is clicked', () => {
@@ -33,7 +33,7 @@ describe('Modal Interactions', () => {
                 .click();
 
             cy.get('[data-cy="warning-modal"]')
-                .should("not.be.visible")
+                .should("not.exist")
         });
 
         it('should require the checkbox to be ticked to reload', () => {

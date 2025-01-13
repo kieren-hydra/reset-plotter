@@ -9,13 +9,12 @@ type CompanyItemProps = {
 }
 
 const CompanyItem = ({companyData}: CompanyItemProps) => {
-    const {name, id, sites} = companyData
 
-    const {companyIdParam} = useParams()
+    const {name, id, sites} = companyData;
+    const {companyIdParam} = useParams();
 
-    const isSelected = id.toString() === companyIdParam
-
-    const path = isSelected ? '/' : `/company/${id}`
+    const isSelected = id.toString() === companyIdParam;
+    const path = isSelected ? '/' : `/company/${id}`;
 
     return (
         <div>
@@ -26,10 +25,8 @@ const CompanyItem = ({companyData}: CompanyItemProps) => {
             >
 
                 <div className="flex gap-2 items-center">
-
                     <i className="ri-building-2-line"></i>
                     <p>{name || "Unknown Company"}</p>
-
                 </div>
 
                 <DataStatus status={"saved"}/>

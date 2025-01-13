@@ -6,18 +6,15 @@ import {useEffect, useState} from "react";
 const SiteBoundaryStatic = () => {
 
     const {companyIdParam, siteIdParam} = useParams()
-
     const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
-
     const [siteBoundary, setSiteBoundary] = useState([])
+    const {boundary} = singleSiteData
 
     useEffect(() => {
-
         if(singleSiteData) {
-        const { boundary } = singleSiteData
         setSiteBoundary(boundary)
         }
-    }, [singleSiteData, setSiteBoundary]);
+    }, [boundary, singleSiteData, siteBoundary, setSiteBoundary]);
 
     const colour = "green";
 
@@ -25,13 +22,12 @@ const SiteBoundaryStatic = () => {
         return <LoadingWheel size={"large"} />
     }
 
-    //TODO add error handling
     if (error) {
         console.error(error)
         return
     }
 
-    if(siteBoundary) {
+    if(siteBoundary && siteBoundary.length > 0) {
         return (
             <Polygon
                 onClick={() => {}}

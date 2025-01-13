@@ -2,6 +2,7 @@ describe('Map Overlay', () => {
 
     beforeEach(() => {
         cy.visit('/');
+
     });
 
     afterEach(() => {
@@ -30,7 +31,7 @@ describe('Map Overlay', () => {
             });
         });
 
-        it('should only be possible to reload from live if changes have been made', () => {
+        it('should possible to reload from live if vertex has been added', () => {
 
             cy.get('[data-cy="reload-btn"]')
                 .should('exist')
@@ -65,14 +66,16 @@ describe('Map Overlay', () => {
             cy.openPinEditor();
         });
 
-        it('should undo moving the pin if the Undo Move Pin button is clicked', () => {
-
+        it('should move the pin if "Move Pin" is clicked and then the map is clicked', () => {
             cy.getPinPosition().then(initialPosition => {
+
                 // Click on the "Move Pin" button
                 cy.get('[data-cy="pin-move"]')
                     .should('exist')
                     .and('be.visible')
                     .click({force: true});
+
+                cy.get('[data-cy="pin-editor"]').should('not.exist');
 
                 // Click on the map
                 cy.get('[data-cy="google-map"]')
@@ -84,11 +87,39 @@ describe('Map Overlay', () => {
                     .and('be.visible')
                     .click();
 
-                cy.getPinPosition().then((newPosition) => {
+                // Compare the new top and left properties
+                cy.get('div[role="button"]').first().then(($pin) => {
+                    const newPosition = {
+                        top: $pin.css('top'),
+                        left: $pin.css('left'),
+                    };
+
+                    // Assert that the top and left properties have not changed
                     expect(newPosition.top).to.equal(initialPosition.top);
                     expect(newPosition.left).to.equal(initialPosition.left);
                 });
             });
+        });
+
+        it('should possible to reload from live if a pin has been moved', () => {
+
+            cy.get('[data-cy="pin-move"]')
+                .should('exist')
+                .and('be.visible')
+                .click({force: true});
+
+            cy.get('[data-cy="pin-editor"]').should('not.exist');
+
+            // Click on the map
+            cy.get('[data-cy="google-map"]')
+                .should('exist')
+                .click(200, 350);
+
+            cy.get('[data-cy="reload-btn"]')
+                .should('exist')
+                .and('be.visible')
+                .and('not.be.disabled')
+
         });
 
         it('should return the pin if the "Undo Delete Pin" button is clicked', () => {
@@ -108,6 +139,24 @@ describe('Map Overlay', () => {
 
                 cy.verifyVertexCount(initialVertexCount);
             });
+        });
+
+        it('should possible to reload from live if a pin has been deleted', () => {
+
+            cy.get('[data-cy="reload-btn"]')
+                .should('exist')
+                .and('be.visible')
+                .and('be.disabled');
+
+            cy.get('[data-cy="pin-delete"]')
+                .should('exist')
+                .and('be.visible')
+                .click({force: true});
+
+            cy.get('[data-cy="reload-btn"]')
+                .should('exist')
+                .and('be.visible')
+                .and('not.be.disabled')
         });
 
         it('should do nothing if the "Undo Delete Pin" button is clicked again', () => {

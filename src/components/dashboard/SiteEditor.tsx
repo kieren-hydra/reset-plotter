@@ -3,6 +3,7 @@ import {Boundary} from "../../types/boundary.ts";
 import PlottrButton from "../global/PlottrButton.tsx";
 import TerminalList from "./TerminalList.tsx";
 import {useSearchParams} from "react-router";
+import {useEffect, useState} from "react";
 
 type SiteEditorProps = {
     terminals: Terminal[],
@@ -11,14 +12,19 @@ type SiteEditorProps = {
 }
 const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
 
+    const [isViewMode, setIsViewMode] = useState<boolean>();
     const hasBoundary = boundary && boundary.length > 0
-
     const [queryParams, setQueryParams] = useSearchParams();
-
     const saved = queryParams.get("saved")
+    const viewModeParam = queryParams.get("map_mode") === "view";
+
+    useEffect(() => {
+        setIsViewMode(viewModeParam)
+    }, [viewModeParam]);
 
     const handleClick = () => {
         queryParams.set("map_mode", "edit_boundary")
+        queryParams.set("action" , "load_boundary")
 
         if (saved === null) {
             queryParams.set("saved", "true")
@@ -40,6 +46,7 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
                         handleClick={handleClick}
                         label={"Geofence Editor"}
                         color="white"
+                        disabled={!isViewMode}
                     />
                 </div>
             </div>

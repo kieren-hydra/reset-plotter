@@ -1,7 +1,7 @@
 import {Routes, Route, Outlet} from "react-router";
 import PlottrLayout from "./components/PlottrLayout.tsx";
 import SiteMap from "./components/map/SiteMap.tsx";
-import Modal from "./components/global/Modal.tsx";
+import Modals from "./components/modals/Modals.tsx";
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
 
             </Routes>
 
-            <Modal/>
+            <Modals/>
         </>
     )
 }

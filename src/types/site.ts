@@ -6,4 +6,5 @@ export type Site = {
     id: number
     boundary: Boundary
     terminals: Terminal[]
+    parentCompanyName: string
 }
