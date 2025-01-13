@@ -2,6 +2,7 @@ import {Routes, Route, Outlet} from "react-router";
 import PlottrLayout from "./components/PlottrLayout.tsx";
 import SiteMap from "./components/map/SiteMap.tsx";
 import Modals from "./components/modals/Modals.tsx";
+import NoRouteMatch from "./components/global/NoRouteMatch.tsx";
 
 function App() {
 
@@ -15,6 +16,9 @@ function App() {
                         <Route path={"site/:siteIdParam"} element={<SiteMap/>}/>
                     </Route>
                 </Route>
+
+
+                <Route path={"*"} element={<NoRouteMatch/>}/>
 
             </Routes>
 
