@@ -29,7 +29,7 @@ const CompanyItem = ({companyData}: CompanyItemProps) => {
                     <p>{name || "Unknown Company"}</p>
                 </div>
 
-                <DataStatus status={"saved"}/>
+                <DataStatus itemType={"company"} activeItem={isSelected}/>
             </ListItemContainer>
 
             {isSelected && <SiteList sites={sites}/>}

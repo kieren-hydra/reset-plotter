@@ -33,7 +33,7 @@ const SiteItem = ({siteData}: SiteItemProps) => {
                     <p>{name || "Unknown Site"}</p>
                 </div>
 
-                <DataStatus status={"no-data"}/>
+                <DataStatus activeItem={isSelected} itemType={"site"} siteData={siteData}/>
 
             </ListItemContainer>
 

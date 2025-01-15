@@ -48,6 +48,41 @@ describe('Dashboard Interactions', () => {
 
     describe('In boundary editor mode', () => {
 
+        it('should change the company status to "unsaved" if a change is made',  () => {
+
+            cy.get('[data-cy="company-data-status"]')
+                .first()
+                .should('exist')
+                .and('contain.text', 'Saved');
+
+            cy.enterEditorMode();
+            cy.addVertex();
+
+            cy.get('[data-cy="company-data-status"]')
+                .first()
+                .should('exist')
+                .and('contain.text', 'Unsaved');
+        });
+
+        it.skip('should change the company status to "saved" if the changes are saved or discarded', () => {
+
+            //TODO: add test logic when "Save" is fully working - KACM
+        });
+
+        it.only('should change the site status to "unsaved" if a change to the boundary is made',  () => {
+
+            cy.enterEditorMode();
+            cy.get('[data-cy="site-data-status"]')
+                .first()
+                .should('exist')
+                .and('contain.text', 'Saved');
+            cy.addVertex();
+            cy.get('[data-cy="site-data-status"]')
+                .first()
+                .should('exist')
+                .and('contain.text', 'Unsaved');
+        });
+
         it('should show a warning modal when selecting a the SAME company if there is an unsaved boundary', () => {
 
             cy.enterEditorMode();

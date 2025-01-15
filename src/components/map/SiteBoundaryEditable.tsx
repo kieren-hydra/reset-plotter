@@ -43,7 +43,7 @@ const SiteBoundaryEditable = () => {
             queryParams.delete("undo_mode")
             setQueryParams(queryParams)
         }
-    }, [singleSiteData, siteBoundary, siteId, siteIdParam]);
+    }, [singleSiteData, siteBoundary, siteId, siteIdParam, loadBoundary]);
 
     if (isLoading) {
         return <LoadingWheel size={"large"}/>
