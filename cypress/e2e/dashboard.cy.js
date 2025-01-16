@@ -69,7 +69,7 @@ describe('Dashboard Interactions', () => {
             //TODO: add test logic when "Save" is fully working - KACM
         });
 
-        it.only('should change the site status to "unsaved" if a change to the boundary is made',  () => {
+        it('should change the site status to "unsaved" if a change to the boundary is made',  () => {
 
             cy.enterEditorMode();
             cy.get('[data-cy="site-data-status"]')
