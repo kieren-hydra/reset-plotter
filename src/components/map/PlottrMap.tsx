@@ -37,6 +37,10 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
     }
 
     const handleMapClick = (event: google.maps.MapMouseEvent) => {
+        if(!siteBoundary) {
+            console.error("No siteBoundary found by click handler");
+            return;
+        }
 
         if (mapMode === "move_pin" && event.latLng && pinIndex != null) {
             const lat = event.latLng.lat();
@@ -48,7 +52,6 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
             queryParams.set("map_mode", "edit_boundary");
             queryParams.set("undo_mode", "move_pin");
             queryParams.delete("pin_index");
-            queryParams.set("saved", "false");
             setQueryParams(queryParams)
         }
 
@@ -58,7 +61,6 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
             setSiteBoundary([...siteBoundary, {lat, lng}])
 
             queryParams.set("undo_mode", "add_pin");
-            queryParams.set("saved", "false");
             setQueryParams(queryParams)
         }
     };

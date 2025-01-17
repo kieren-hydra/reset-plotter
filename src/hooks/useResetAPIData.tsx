@@ -15,12 +15,13 @@ export const useResetAPIData = (companyId: number | null = null, siteId: number 
 
     const singleSiteData = useMemo(() => {
         if (!companyId || !siteId) {
-            return
+            // console.error("no company id or site id to fetch single site data!");
+            return null;
         }
         const parentCompany = allData?.companies?.find((company: Company) => company.id === companyId)
         const siteData = parentCompany ? parentCompany.sites?.find((site: Site) => site.id === siteId) : null
         return {...siteData, parentCompanyName: parentCompany?.name}
-    },[allData?.companies, companyId, siteId]);
+    },[allData, companyId, siteId]);
 
     return {allData, singleSiteData, isLoading, error}
 }

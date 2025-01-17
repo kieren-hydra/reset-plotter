@@ -7,8 +7,8 @@ import {useEffect} from "react";
 
 const SiteBoundaryEditable = () => {
 
-    const {companyIdParam, siteIdParam} = useParams()
-    const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
+    const {companyIdParam, siteIdParam} = useParams();
+    const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam));
     const [queryParams, setQueryParams]  = useSearchParams();
     const colour = "orange";
 

@@ -2,22 +2,20 @@ import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import PlottrButton from "../global/PlottrButton.tsx";
 import UndoButton from "./UndoButton.tsx";
 import {useSearchParams} from "react-router";
-import {useEffect, useState} from "react";
 import useOnClickHandlers from "../../hooks/useOnClickHandlers.tsx";
 import useMapMode from "../../hooks/useMapMode.tsx";
+import useSavedStatus from "../../hooks/useSavedStatus.tsx";
 
 const MapOverLays = () => {
 
     const {companyName, siteName} = useEditSiteStore();
-    const [saved, setSaved] = useState<boolean>(true);
     const [queryParams, setQueryParams] = useSearchParams();
     const {handleSaveBoundary} = useOnClickHandlers();
     const mapMode = useMapMode();
+    const {boundaryIsSaved} = useSavedStatus();
 
-    useEffect(() => {
-        const savedParam = queryParams.get("saved");
-        setSaved(savedParam === "true");
-    }, [queryParams]);
+    //TODO: add check for terminals saved status
+    const saved = boundaryIsSaved;
 
     const handleReload = () => {
         queryParams.set("warning", "reload_live_boundary");

@@ -1,34 +1,44 @@
 import {Site} from "../../types/site.ts";
-import {useEffect, useState} from "react";
-import {useSearchParams} from "react-router";
+import {useMemo} from "react";
+import useSavedStatus from "../../hooks/useSavedStatus.tsx";
+import useMapMode from "../../hooks/useMapMode.tsx";
 
 type DataStatusProps = {
     itemType: "company" | "site" | "terminal",
-    siteData?: Site
+    siteData?: Site | null
     activeItem: boolean
 };
 
-type Status = "saved" | "unsaved" | "no-data"
-const DataStatus = ({itemType, activeItem, siteData}: DataStatusProps) => {
+type Status = "saved" | "unsaved" | "no-data";
+const DataStatus = ({itemType, activeItem, siteData = null}: DataStatusProps) => {
+    const {boundaryIsSaved} = useSavedStatus();
+    const mapMode = useMapMode();
 
-    const [status, setStatus] = useState<Status>("saved");
-    const [queryParams] = useSearchParams();
+    const status: Status = useMemo(() => {
 
-    useEffect(() => {
-        const isNotSaved = queryParams.has("saved") && queryParams.get("saved") === "false";
-        if (itemType === "company" && activeItem) {
-            setStatus(isNotSaved ? "unsaved" : "saved");
-        } else if (itemType === "site" && siteData) {
-            if (isNotSaved && activeItem) {
-                setStatus("unsaved");
-            } else if (siteData.boundary.length === 0) {
-                setStatus("no-data");
-            } else {
-                setStatus("saved");
+        switch (itemType) {
+            case "company":
+                return !activeItem || boundaryIsSaved ? "saved" : "unsaved";
+
+            case "site": {
+                const isViewOrTerminalMode = ["view", "edit_terminals"].includes(mapMode || "view");
+                const hasBoundaryData = siteData?.boundary && siteData.boundary.length > 0;
+                if (!activeItem || isViewOrTerminalMode || boundaryIsSaved) {
+                    return hasBoundaryData ? "saved" : "no-data"
+                }
+                //Will return unsaved if it is an active item in boundary editor mode and the changes have not been saved - KACM
+                return "unsaved";
             }
-        }
-    }, [itemType, queryParams, activeItem, siteData]);
 
+            case "terminal":
+                //TODO: needs to be updated
+                return "saved";
+
+            default:
+                return "saved"
+        }
+
+    }, [itemType, activeItem, boundaryIsSaved, mapMode, siteData?.boundary]);
 
     const statusMap = {
         "no-data": {text: "No Data", color: "bg-gray"},

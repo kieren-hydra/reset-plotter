@@ -9,14 +9,12 @@ const ReloadLiveBoundaryModal = () => {
 
     const handleActionBtn = () => {
         queryParams.set("action", "load_boundary")
-        queryParams.set("saved", "true")
         queryParams.delete("warning");
         if (queryParams.has('blocked_path')) {
             queryParams.delete('blocked_path')
         }
         setQueryParams(queryParams);
     }
-
 
     return (
         <ModalTemplate

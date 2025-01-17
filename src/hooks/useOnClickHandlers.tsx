@@ -14,16 +14,12 @@ const useOnClickHandlers = () => {
     const handleSaveBoundary = () => {
         alert("boundary saved! (but not really)")
         if (queryParams.has("warning")) {
-            queryParams.delete("warning")
+            queryParams.delete("warning");
         }
-        //temp always setting to saved  - will eventually need to evaluate response from API
-        if(queryParams.has("saved")) {
-           queryParams.set("saved", "true")
-        }
-        setQueryParams(queryParams)
+        setQueryParams(queryParams);
     }
 
-    return {handleModalClose, handleSaveBoundary}
+    return {handleModalClose, handleSaveBoundary};
 }
 
 export default useOnClickHandlers;

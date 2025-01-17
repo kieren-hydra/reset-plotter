@@ -1,5 +1,6 @@
 import {Link, useSearchParams} from "react-router";
 import React from "react";
+import useSavedStatus from "../../hooks/useSavedStatus.tsx";
 
 type ListItemContainerProps = {
     isSelected: boolean
@@ -9,8 +10,11 @@ type ListItemContainerProps = {
 }
 const ListItemContainer = ({isSelected, children, path, dataCy} : ListItemContainerProps) => {
 
-    const [queryParams, setQueryParams] = useSearchParams()
-    const unSaved = queryParams.get('saved') === "false";
+    const [queryParams, setQueryParams] = useSearchParams();
+    const { boundaryIsSaved } = useSavedStatus();
+
+    //TODO will need to update  with check for terminal saved status - KACM
+    const unSaved = !boundaryIsSaved
 
     const handleClick = (event : React.MouseEvent) => {
         if(unSaved) {
