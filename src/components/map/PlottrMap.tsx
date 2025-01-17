@@ -5,30 +5,21 @@ import ErrorFallback from "../global/ErrorFallback.tsx";
 import {ReactNode, useEffect, useState} from "react";
 import {useEditSiteStore} from "../../stores/useEditSiteStore.ts";
 import MapOverLays from "./MapOverLays.tsx";
+import useMapMode from "../../hooks/useMapMode.tsx";
 
 type GoogleMapComponentProps = {
     children: ReactNode,
 };
 
-type MapMode = "view" | "edit_boundary" | "edit_pin" | "delete_pin" | "move_pin" | "edit_terminal";
-
 const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
     const [queryParams, setQueryParams] = useSearchParams();
     const {setSiteBoundary, siteBoundary, setLastPinLocation} = useEditSiteStore()
-    const [MapMode, setMapMode] = useState<MapMode>("view");
     const [pinIndex, setPinIndex] = useState<number | null>(null);
+    const mapMode = useMapMode();
 
     useEffect(() => {
-        const mapModeParam = queryParams.get("map_mode");
         const pinIndexParam = queryParams.get("pin_index");
-
-        if(!queryParams.has("map_mode")) {
-            queryParams.set("map_mode", "view")
-            setQueryParams(queryParams)
-        }
-
-        setMapMode(mapModeParam as MapMode || "view");
         setPinIndex(pinIndexParam ? Number(pinIndexParam) : null);
     }, [queryParams]);
 
@@ -47,7 +38,7 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
     const handleMapClick = (event: google.maps.MapMouseEvent) => {
 
-        if (MapMode === "move_pin" && event.latLng && pinIndex != null) {
+        if (mapMode === "move_pin" && event.latLng && pinIndex != null) {
             const lat = event.latLng.lat();
             const lng = event.latLng.lng();
 
@@ -61,7 +52,7 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
             setQueryParams(queryParams)
         }
 
-        if (MapMode === "edit_boundary" && event.latLng) {
+        if (mapMode === "edit_boundary" && event.latLng) {
             const lat = event.latLng.lat();
             const lng = event.latLng.lng();
             setSiteBoundary([...siteBoundary, {lat, lng}])
@@ -103,7 +94,7 @@ const PlottrMap = ({children}: GoogleMapComponentProps) => {
 
             </GoogleMap>
 
-            {MapMode !== "view" && <MapOverLays/>}
+            {mapMode !== "view" && <MapOverLays/>}
 
         </div>
     );

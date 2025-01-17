@@ -4,6 +4,7 @@ import UndoButton from "./UndoButton.tsx";
 import {useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import useOnClickHandlers from "../../hooks/useOnClickHandlers.tsx";
+import useMapMode from "../../hooks/useMapMode.tsx";
 
 const MapOverLays = () => {
 
@@ -11,19 +12,16 @@ const MapOverLays = () => {
     const [saved, setSaved] = useState<boolean>(true);
     const [queryParams, setQueryParams] = useSearchParams();
     const {handleSaveBoundary} = useOnClickHandlers();
+    const mapMode = useMapMode();
 
     useEffect(() => {
         const savedParam = queryParams.get("saved");
-        if (savedParam === "true") {
-            setSaved(true);
-        } else if (savedParam === "false") {
-            setSaved(false);
-        }
+        setSaved(savedParam === "true");
     }, [queryParams]);
 
     const handleReload = () => {
-        queryParams.set("warning", "reload_live_boundary")
-        setQueryParams(queryParams)
+        queryParams.set("warning", "reload_live_boundary");
+        setQueryParams(queryParams);
     }
 
     return (
@@ -36,7 +34,7 @@ const MapOverLays = () => {
                     <p>{siteName || "Unknown Company"}</p>
                 </div>
 
-                <h2>Geofence Editor</h2>
+                <h2>{mapMode === "edit_boundary" ?  "Geofence Editor" : mapMode === "edit_terminals" ? "Terminal Editor" : "Pin Editor"}</h2>
                 <p>Click on the map to place at least three pins to define a boundary</p>
             </div>
 

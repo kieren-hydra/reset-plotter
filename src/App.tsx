@@ -14,6 +14,7 @@ function App() {
                 <Route element={<PlottrLayout/>}>
                     <Route path={"company/:companyIdParam"} element={<Outlet/>}>
                         <Route path={"site/:siteIdParam"} element={<SiteMap/>}/>
+                        <Route path="site/:siteIdParam/terminal/:terminalIdParam" element={<SiteMap />} />
                     </Route>
                 </Route>
 

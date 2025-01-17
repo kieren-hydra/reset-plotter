@@ -9,14 +9,10 @@ type SiteItemProps = {
 }
 const SiteItem = ({siteData}: SiteItemProps) => {
 
-    const {name, id, terminals, boundary} = siteData
-
-    const { companyIdParam, siteIdParam } = useParams()
-
-    const isSelected = id.toString() === siteIdParam
-
-    const path = isSelected ? `/company/${companyIdParam}` : `/company/${companyIdParam}/site/${id}`
-
+    const {name, id, terminals, boundary} = siteData;
+    const { companyIdParam, siteIdParam } = useParams();
+    const isSelected = id.toString() === siteIdParam;
+    const path = isSelected ? `/company/${companyIdParam}` : `/company/${companyIdParam}/site/${id}`;
 
     return (
 
@@ -28,7 +24,6 @@ const SiteItem = ({siteData}: SiteItemProps) => {
             >
 
                 <div className="flex gap-2 items-center">
-
                     <i className="ri-map-2-line"></i>
                     <p>{name || "Unknown Site"}</p>
                 </div>

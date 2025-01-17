@@ -3,7 +3,12 @@ import {useParams} from "react-router";
 import useResetAPIData from "../../hooks/useResetAPIData.tsx";
 import LoadingWheel from "../global/LoadingWheel.tsx";
 import {useEffect, useState} from "react";
-const SiteBoundaryStatic = () => {
+import {MapMode} from "../../types/map-mode.ts";
+
+type SiteBoundaryStaticProps = {
+    mapMode: MapMode
+}
+const SiteBoundaryStatic = ({mapMode} : SiteBoundaryStaticProps) => {
 
     const {companyIdParam, siteIdParam} = useParams()
     const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
@@ -16,7 +21,7 @@ const SiteBoundaryStatic = () => {
         }
     }, [boundary, singleSiteData, siteBoundary, setSiteBoundary]);
 
-    const colour = "green";
+    const color = mapMode === "edit_terminals" ? "orange" : "green";
 
     if (isLoading) {
         return <LoadingWheel size={"large"} />
@@ -34,9 +39,9 @@ const SiteBoundaryStatic = () => {
                 key={siteIdParam}
                 path={singleSiteData.boundary}
                 options={{
-                    fillColor: colour,
+                    fillColor: color,
                     fillOpacity: 0.4,
-                    strokeColor: colour,
+                    strokeColor: color,
                     strokeOpacity: 1,
                     strokeWeight: 2,
                     clickable: false,

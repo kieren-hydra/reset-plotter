@@ -10,7 +10,7 @@ const TerminalList = ({terminals} : TerminalListProps) => {
     return (
             <div>
                 {terminals && terminals.length > 0 ? (
-                    terminals.map((terminal: Terminal) => <TerminalItem isSelected={false} key={terminal.id} terminalData={terminal}/>)
+                    terminals.map((terminal: Terminal) => <TerminalItem key={terminal.id} terminalData={terminal}/>)
                 ) : (
                     <p>No terminals available.</p>
                 )}
@@ -18,4 +18,4 @@ const TerminalList = ({terminals} : TerminalListProps) => {
     )
 }
 
-export default TerminalList
+export default TerminalList;

@@ -1,10 +1,11 @@
-import { useSearchParams } from "react-router";
-import { useEffect, useState } from "react";
+import {useSearchParams} from "react-router";
+import {useEffect, useState} from "react";
 import SiteBoundaryStatic from "./SiteBoundaryStatic.tsx";
 import SiteVertices from "./SiteVertices.tsx";
 import SiteBoundaryEditable from "./SiteBoundaryEditable.tsx";
 import PinEditor from "./PinEditor.tsx";
 import {MapMode} from "../../types/map-mode.ts";
+import Terminals from "./Terminals.tsx";
 
 const SiteMap = () => {
     const [queryParams] = useSearchParams();
@@ -18,10 +19,14 @@ const SiteMap = () => {
 
     return (
         <>
-            {mapMode === "view" ? <SiteBoundaryStatic /> : <SiteBoundaryEditable />}
-            {mapMode !== "view" && <SiteVertices />}
-            {mapMode === "edit_pin" && <PinEditor />}
-            {/*<Terminals />*/}
+            {mapMode === "view" || mapMode === "edit_terminals" ?
+                <SiteBoundaryStatic mapMode={mapMode}/>
+                :
+                <SiteBoundaryEditable/>
+            }
+            {mapMode !== "view" && mapMode !== "edit_terminals" && <SiteVertices/>}
+            {mapMode === "edit_pin" && <PinEditor/>}
+            {mapMode === "edit_terminals" && <Terminals />}
         </>
     );
 };
