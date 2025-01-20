@@ -11,15 +11,17 @@ export const useResetAPIData = (companyId: number | null = null, siteId: number 
         queryFn: () => webService.get('/test '),
     })
 
-    const allData = data?.data
+    const allData = data?.mandCompanies;
+
+
 
     const singleSiteData = useMemo(() => {
         if (!companyId || !siteId) {
             // console.error("no company id or site id to fetch single site data!");
             return null;
         }
-        const parentCompany = allData?.companies?.find((company: Company) => company.id === companyId)
-        const siteData = parentCompany ? parentCompany.sites?.find((site: Site) => site.id === siteId) : null
+        const parentCompany = allData?.find((company: Company) => company.id === companyId)
+        const siteData = parentCompany ? parentCompany.sites?.find((site: Site) => site.id === siteId) : null;
         return {...siteData, parentCompanyName: parentCompany?.name}
     },[allData, companyId, siteId]);
 

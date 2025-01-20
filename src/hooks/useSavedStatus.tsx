@@ -8,7 +8,7 @@ const useSavedStatus = () => {
     const {companyIdParam, siteIdParam} = useParams();
     const { siteBoundary} = useEditSiteStore();
     const mapMode = useMapMode();
-    const { singleSiteData} = useResetAPIData(Number(companyIdParam), Number(siteIdParam));
+    const { singleSiteData } = useResetAPIData(Number(companyIdParam), Number(siteIdParam));
 
     const boundaryIsSaved = useMemo(() => {
 
@@ -17,9 +17,9 @@ const useSavedStatus = () => {
             return true;
         }
 
-        //in boundary editor check for any differences between the API and local versions of the boundary
+        //in boundary editor, check for any differences between the API and local versions of the boundary
         if(mapMode && ["edit_boundary", "edit_pin"].includes(mapMode)){
-            return JSON.stringify(siteBoundary) === JSON.stringify(singleSiteData?.boundary);
+            return JSON.stringify(siteBoundary) === JSON.stringify(singleSiteData?.plottrData);
         }
 
         //default status is that saved equals true

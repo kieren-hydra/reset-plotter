@@ -22,7 +22,7 @@ const DataStatus = ({itemType, activeItem, siteData = null}: DataStatusProps) =>
 
             case "site": {
                 const isViewOrTerminalMode = ["view", "edit_terminals"].includes(mapMode || "view");
-                const hasBoundaryData = siteData?.boundary && siteData.boundary.length > 0;
+                const hasBoundaryData = siteData?.plottrData && siteData.plottrData.length > 0;
                 if (!activeItem || isViewOrTerminalMode || boundaryIsSaved) {
                     return hasBoundaryData ? "saved" : "no-data"
                 }
@@ -38,7 +38,7 @@ const DataStatus = ({itemType, activeItem, siteData = null}: DataStatusProps) =>
                 return "saved"
         }
 
-    }, [itemType, activeItem, boundaryIsSaved, mapMode, siteData?.boundary]);
+    }, [itemType, activeItem, boundaryIsSaved, mapMode, siteData?.plottrData]);
 
     const statusMap = {
         "no-data": {text: "No Data", color: "bg-gray"},

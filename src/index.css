@@ -50,3 +50,25 @@ p {
 small {
   font-size: 14px;
 }
+
+/* Custom scrollbar styling */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px; /* Slimmer width */
+  height: 8px; /* For horizontal scrollbars */
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Light gray background */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #c0c0c0; /* Gray thumb */
+  border-radius: 8px; /* Rounded corners */
+  border: 2px solid #f0f0f0; /* Matches the track */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0; /* Darker gray on hover */
+}
+

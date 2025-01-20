@@ -7,14 +7,13 @@ import useResetAPIData from "../../hooks/useResetAPIData.tsx";
 
 const CompanyList = () => {
 
-    const { allData, isLoading, error} = useResetAPIData()
+    const { allData: companies, isLoading, error} = useResetAPIData()
 
-    const companies = allData?.companies
 
     return (
         <ErrorBoundary fallback={<ErrorFallback/>}>
 
-        <div className="h-fit w-full bg-white rounded-md border border-gray-300 p-2">
+        <div className="h-fit w-full bg-white rounded-md border border-gray-300 p-2 overflow-auto">
 
             {isLoading && <LoadingWheel size="small" />}
 
@@ -32,7 +31,7 @@ const CompanyList = () => {
         </div>
 
         </ErrorBoundary>
-    )
+    );
 }
 
 export default CompanyList

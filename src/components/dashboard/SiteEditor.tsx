@@ -51,4 +51,4 @@ const SiteEditor = ({terminals, boundary}: SiteEditorProps) => {
     )
 }
 
-export default SiteEditor
+export default SiteEditor;

@@ -3,19 +3,18 @@ import Header from "./Header.tsx";
 import CompanyList from "./CompanyList.tsx";
 
 const Dashboard = () => {
-
     return (
-        <div data-cy="dashboard" className="h-screen w-[439px] p-4">
-
-            <Header/>
-
-            <div className={"h-fit overflow-y-auto w-full bg-gray-light rounded-lg p-4"}>
-
-                <SearchBar/>
-                <CompanyList/>
+        <div data-cy="dashboard" className="h-screen w-[439px] p-4 flex flex-col">
+            <Header />
+            <div className="flex flex-col h-full overflow-hidden bg-gray-light rounded-lg p-4">
+                <SearchBar />
+                <div className="flex-1 overflow-y-auto scrollbar-custom">
+                    <CompanyList />
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
 
 export default Dashboard

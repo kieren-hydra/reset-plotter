@@ -9,7 +9,7 @@ type SiteItemProps = {
 }
 const SiteItem = ({siteData}: SiteItemProps) => {
 
-    const {name, id, terminals, boundary} = siteData;
+    const {name, id, terminals, plottrData: boundary} = siteData;
     const { companyIdParam, siteIdParam } = useParams();
     const isSelected = id.toString() === siteIdParam;
     const path = isSelected ? `/company/${companyIdParam}` : `/company/${companyIdParam}/site/${id}`;

@@ -10,26 +10,26 @@ type SiteBoundaryStaticProps = {
 }
 const SiteBoundaryStatic = ({mapMode} : SiteBoundaryStaticProps) => {
 
-    const {companyIdParam, siteIdParam} = useParams()
-    const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam))
-    const [siteBoundary, setSiteBoundary] = useState([])
-    const {boundary} = singleSiteData
+    const {companyIdParam, siteIdParam} = useParams();
+    const {singleSiteData, isLoading, error} = useResetAPIData(Number(companyIdParam), Number(siteIdParam));
+    const [siteBoundary, setSiteBoundary] = useState([]);
+    const {plottrData: boundary} = singleSiteData;
 
     useEffect(() => {
-        if(singleSiteData) {
+        if(boundary) {
         setSiteBoundary(boundary)
         }
-    }, [boundary, singleSiteData, siteBoundary, setSiteBoundary]);
+    }, [boundary, siteBoundary, setSiteBoundary]);
 
     const color = mapMode === "edit_terminals" ? "orange" : "green";
 
     if (isLoading) {
-        return <LoadingWheel size={"large"} />
+        return <LoadingWheel size={"large"} />;
     }
 
     if (error) {
         console.error(error)
-        return
+        return;
     }
 
     if(siteBoundary && siteBoundary.length > 0) {
@@ -37,7 +37,7 @@ const SiteBoundaryStatic = ({mapMode} : SiteBoundaryStaticProps) => {
             <Polygon
                 onClick={() => {}}
                 key={siteIdParam}
-                path={singleSiteData.boundary}
+                path={siteBoundary}
                 options={{
                     fillColor: color,
                     fillOpacity: 0.4,
@@ -53,7 +53,7 @@ const SiteBoundaryStatic = ({mapMode} : SiteBoundaryStaticProps) => {
             />
         )
     } else {
-        return null
+        return null;
     }
 }
 

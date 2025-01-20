@@ -4,7 +4,7 @@ import {Boundary} from "./boundary.ts";
 export type Site = {
     name: string
     id: number
-    boundary: Boundary
+    plottrData: Boundary
     terminals: Terminal[]
     parentCompanyName: string
 }

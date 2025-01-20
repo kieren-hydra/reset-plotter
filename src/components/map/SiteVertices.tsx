@@ -22,19 +22,25 @@ const SiteVertices = () => {
         setQueryParams(queryParams);
     }
 
-    return (
-        <>
-            {
-             vertices.length > 0 && siteBoundary.map((vertex, index) => (
-                    <Marker
-                        key={index}
-                        position={{lat: vertex.lat, lng: vertex.lng}}
-                        icon={createDynamicIcon(index)}
-                        onClick={() => handleClick(index)}
-                    />
-                ))
-            }
-        </>
-    )
+    if(siteBoundary && vertices) {
+        return (
+            <>
+                {
+                    vertices.length > 0 && siteBoundary.map((vertex, index) => (
+                        <Marker
+                            key={index}
+                            position={{lat: vertex.lat, lng: vertex.lng}}
+                            icon={createDynamicIcon(index)}
+                            onClick={() => handleClick(index)}
+                        />
+                    ))
+                }
+            </>
+        )
+    } else {
+        return null;
+    }
+
+
 }
 export default SiteVertices

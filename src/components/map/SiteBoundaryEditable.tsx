@@ -30,7 +30,7 @@ const SiteBoundaryEditable = () => {
         const existingBoundaryInStore = siteBoundary && siteId?.toString() === siteIdParam
 
         if (singleSiteData && (!existingBoundaryInStore || loadBoundary)) {
-            const {name, id, boundary, parentCompanyName} = singleSiteData
+            const {name, id, plottrData: boundary, parentCompanyName} = singleSiteData;
             setSiteId(id)
             setSiteBoundary(boundary)
             setSiteName(name)
